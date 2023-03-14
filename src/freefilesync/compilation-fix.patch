@@ -1,0 +1,86 @@
+--- a/FreeFileSync/Source/Makefile
++++ b/FreeFileSync/Source/Makefile
+@@ -2,7 +2,7 @@
+
+ CXXFLAGS += -std=c++2b -pipe -DWXINTL_NO_GETTEXT_MACRO -I../.. -I../../zenXml -include "zen/i18n.h" -include "zen/warn_static.h" \
+            -Wall -Wfatal-errors -Wmissing-include-dirs -Wswitch-enum -Wcast-align -Wnon-virtual-dtor -Wno-unused-function -Wshadow -Wno-maybe-uninitialized \
+-           -O3 -DNDEBUG `wx-config --cxxflags --debug=no` -pthread
++           -Os -DNDEBUG `wx-config --cxxflags --debug=no` -pthread
+
+ LDFLAGS += -s -no-pie `wx-config --libs std, aui, richtext --debug=no` -pthread
+
+--- a/FreeFileSync/Source/base/icon_loader.cpp
++++ b/FreeFileSync/Source/base/icon_loader.cpp
+@@ -216,7 +216,11 @@
+     //the remaining icon types won't block!
+     assert(GDK_IS_PIXBUF(gicon) || G_IS_THEMED_ICON(gicon) || G_IS_EMBLEMED_ICON(gicon));
+ 
++#if (GLIB_CHECK_VERSION (2, 67, 0))
++    g_object_ref(gicon);                   //pass ownership
++#else
+     ::g_object_ref(gicon);                 //pass ownership
++#endif
+     return FileIconHolder(gicon, maxSize); //
+ 
+ }
+--- a/wx+/dc.h
++++ b/wx+/dc.h
+@@ -91,8 +91,10 @@
+ inline
+ int getDPI()
+ {
++#if 1
+ #ifndef wxHAS_DPI_INDEPENDENT_PIXELS
+ #error why is wxHAS_DPI_INDEPENDENT_PIXELS not defined?
++#endif
+ #endif
+     //GTK2 doesn't properly support high DPI: https://freefilesync.org/forum/viewtopic.php?t=6114
+     //=> requires general fix at wxWidgets-level
+--- a/zen/format_unit.cpp
++++ b/zen/format_unit.cpp
+@@ -186,7 +186,11 @@
+         ---------------------------------------
+         LC_TIME=en_DK.utf8    => Monday
+         LC_TIME=en_US.utf8    => Sunday       */
++#if 0 // _NL_TIME_FIRST_WEEKDAY not available with musl.
+     const char* firstDay = ::nl_langinfo(_NL_TIME_FIRST_WEEKDAY); //[1-Sunday, 7-Saturday]
++#else
++    const char* firstDay = "1";
++#endif
+     ASSERT_SYSERROR(firstDay && 1 <= *firstDay && *firstDay <= 7);
+ 
+     const int weekDayStartSunday = *firstDay;
+--- a/zen/guid.h
++++ b/zen/guid.h
+@@ -20,6 +20,8 @@
+ {
+     std::string guid(16, '\0');
+ 
++#define __GLIBC_PREREQ(x, y) 1
++
+ #ifndef __GLIBC_PREREQ
+ #error Where is Glibc?
+ #endif
+--- a/zen/open_ssl.cpp
++++ b/zen/open_ssl.cpp
+@@ -226,9 +226,20 @@
+                 throw SysError(formatLastOpenSSLError("BIO_new"));
+             ZEN_ON_SCOPE_EXIT(::BIO_free_all(bio));
+ 
++#if 1 // Only when compiling with clang ?
+             if ((publicKey ?
+                  ::PEM_write_bio_PUBKEY :
+                  PEM_write_bio_PrivateKey2)(bio, evp) != 1)
++#else
++            int rc;
++            if (publicKey) {
++                rc = ::PEM_write_bio_PUBKEY(bio, evp);
++            }
++            else {
++                rc = PEM_write_bio_PrivateKey2(bio, evp);
++            }
++            if (rc != 1)
++#endif
+                 throw SysError(formatLastOpenSSLError(publicKey ? "PEM_write_bio_PUBKEY" : "PEM_write_bio_PrivateKey"));
+             //---------------------------------------------
+             const int keyLen = BIO_pending(bio);

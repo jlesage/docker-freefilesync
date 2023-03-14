@@ -1,0 +1,133 @@
+--- a/FreeFileSync/Source/ui/gui_generated.cpp	2023-03-04 21:04:50.860646167 -0500
++++ b/FreeFileSync/Source/ui/gui_generated.cpp	2023-03-04 21:05:24.492657358 -0500
+@@ -110,12 +110,14 @@
+ 
+     m_menuHelp->AppendSeparator();
+ 
++#if 0
+     m_menuItemCheckVersionNow = new wxMenuItem( m_menuHelp, wxID_ANY, wxString( _("&Check for updates now") ), wxEmptyString, wxITEM_NORMAL );
+     m_menuHelp->Append( m_menuItemCheckVersionNow );
+ 
+     m_menuItemCheckVersionAuto = new wxMenuItem( m_menuHelp, wxID_ANY, wxString( _("Check &automatically once a week") ), wxEmptyString, wxITEM_CHECK );
+     m_menuHelp->Append( m_menuItemCheckVersionAuto );
+     m_menuItemCheckVersionAuto->Check( true );
++#endif
+ 
+     m_menuHelp->AppendSeparator();
+ 
+@@ -1129,8 +1131,10 @@
+     m_menuTools->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainDialogGenerated::onMenuExportFileList ), this, m_menuItemExportList->GetId());
+     m_menuTools->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainDialogGenerated::onMenuResetLayout ), this, m_menuItemResetLayout->GetId());
+     m_menuHelp->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainDialogGenerated::onShowHelp ), this, m_menuItemHelp->GetId());
++#if 0
+     m_menuHelp->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainDialogGenerated::onMenuCheckVersion ), this, m_menuItemCheckVersionNow->GetId());
+     m_menuHelp->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainDialogGenerated::onMenuCheckVersionAutomatically ), this, m_menuItemCheckVersionAuto->GetId());
++#endif
+     m_menuHelp->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainDialogGenerated::onMenuAbout ), this, m_menuItemAbout->GetId());
+     m_buttonCompare->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MainDialogGenerated::onCompare ), NULL, this );
+     m_bpButtonCmpConfig->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MainDialogGenerated::onCmpSettings ), NULL, this );
+--- a/FreeFileSync/Source/ui/gui_generated.h	2023-03-04 21:05:32.442822109 -0500
++++ b/FreeFileSync/Source/ui/gui_generated.h	2023-03-04 21:05:56.853293931 -0500
+@@ -96,8 +96,10 @@
+     wxMenuItem* m_menuItemShowOverview;
+     wxMenu* m_menuHelp;
+     wxMenuItem* m_menuItemHelp;
++#if 0
+     wxMenuItem* m_menuItemCheckVersionNow;
+     wxMenuItem* m_menuItemCheckVersionAuto;
++#endif
+     wxMenuItem* m_menuItemAbout;
+     wxBoxSizer* bSizerPanelHolder;
+     wxPanel* m_panelTopButtons;
+@@ -234,8 +236,10 @@
+     virtual void onMenuExportFileList( wxCommandEvent& event ) { event.Skip(); }
+     virtual void onMenuResetLayout( wxCommandEvent& event ) { event.Skip(); }
+     virtual void onShowHelp( wxCommandEvent& event ) { event.Skip(); }
++#if 0
+     virtual void onMenuCheckVersion( wxCommandEvent& event ) { event.Skip(); }
+     virtual void onMenuCheckVersionAutomatically( wxCommandEvent& event ) { event.Skip(); }
++#endif
+     virtual void onMenuAbout( wxCommandEvent& event ) { event.Skip(); }
+     virtual void onCompSettingsContextMouse( wxMouseEvent& event ) { event.Skip(); }
+     virtual void onCompSettingsContext( wxCommandEvent& event ) { event.Skip(); }
+--- a/FreeFileSync/Source/ui/main_dlg.cpp	2023-03-04 21:06:32.493465778 -0500
++++ b/FreeFileSync/Source/ui/main_dlg.cpp	2023-03-04 21:08:01.254833528 -0500
+@@ -30,7 +30,9 @@
+ #include <wx+/window_tools.h>
+ #include <wx+/image_resources.h>
+ #include "cfg_grid.h"
++#if 0
+ #include "version_check.h"
++#endif
+ #include "gui_status_handler.h"
+ #include "small_dlgs.h"
+ #include "progress_indicator.h"
+@@ -834,7 +836,9 @@
+ 
+     setImage(*m_menuItemHelp,            loadImage("help_sicon"));
+     setImage(*m_menuItemAbout,           loadImage("about_sicon"));
++#if 0
+     setImage(*m_menuItemCheckVersionNow, loadImage("update_check_sicon"));
++#endif
+ 
+     fixMenuIcons(*m_menuFile);
+     fixMenuIcons(*m_menuActions);
+@@ -935,7 +939,9 @@
+     updateGui();
+ 
+     //register regular check for update on next idle event
++#if 0
+     Bind(wxEVT_IDLE, &MainDialog::onStartupUpdateCheck, this);
++#endif
+ 
+     //asynchronous call to wxWindow::Layout(): fix superfluous frame on right and bottom when FFS is started in fullscreen mode
+     Bind(wxEVT_IDLE, &MainDialog::onLayoutWindowAsync, this);
+@@ -1126,7 +1132,9 @@
+     auiMgr_.GetPane(m_panelSearch).Hide(); //no need to show it on startup
+     auiMgr_.GetPane(m_panelLog   ).Hide(); //
+ 
++#if 0
+     m_menuItemCheckVersionAuto->Check(updateCheckActive(globalCfg_.lastUpdateCheck));
++#endif
+ 
+     auiMgr_.Update();
+ }
+@@ -5840,6 +5848,7 @@
+ }
+ 
+ 
++#if 0
+ void MainDialog::onMenuCheckVersion(wxCommandEvent& event)
+ {
+     checkForUpdateNow(*this, globalCfg_.lastOnlineVersion);
+@@ -5903,6 +5912,7 @@
+     else
+         showNewVersionReminder();
+ }
++#endif
+ 
+ 
+ void MainDialog::onLayoutWindowAsync(wxIdleEvent& event)
+--- a/FreeFileSync/Source/ui/main_dlg.h	2023-03-04 21:08:09.221203695 -0500
++++ b/FreeFileSync/Source/ui/main_dlg.h	2023-03-04 21:08:30.156944618 -0500
+@@ -197,7 +197,9 @@
+     void removeSelectedCfgHistoryItems(bool removeFromDisk);
+     void renameSelectedCfgHistoryItem();
+ 
++#if 0
+     void onStartupUpdateCheck(wxIdleEvent& event);
++#endif
+     void onLayoutWindowAsync (wxIdleEvent& event);
+ 
+     void onResizeLeftFolderWidth(wxEvent& event);
+@@ -273,8 +275,10 @@
+     void onMenuExportFileList (wxCommandEvent& event) override;
+     void onMenuResetLayout    (wxCommandEvent& event) override { resetLayout(); }
+     void onMenuFindItem       (wxCommandEvent& event) override { showFindPanel(true /*show*/); } //CTRL + F
++#if 0
+     void onMenuCheckVersion   (wxCommandEvent& event) override;
+     void onMenuCheckVersionAutomatically(wxCommandEvent& event) override;
++#endif
+     void onMenuAbout          (wxCommandEvent& event) override;
+     void onShowHelp           (wxCommandEvent& event) override { wxLaunchDefaultBrowser(L"https://freefilesync.org/manual.php?topic=freefilesync"); }
+     void onMenuQuit           (wxCommandEvent& event) override { Close(); }
