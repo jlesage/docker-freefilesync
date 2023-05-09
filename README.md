@@ -1,7 +1,7 @@
 # Docker container for FreeFileSync
 [![Docker Image Size](https://img.shields.io/docker/image-size/jlesage/freefilesync/latest)](https://hub.docker.com/r/jlesage/freefilesync/tags) [![Build Status](https://github.com/jlesage/docker-freefilesync/actions/workflows/build-image.yml/badge.svg?branch=master)](https://github.com/jlesage/docker-freefilesync/actions/workflows/build-image.yml) [![GitHub Release](https://img.shields.io/github/release/jlesage/docker-freefilesync.svg)](https://github.com/jlesage/docker-freefilesync/releases/latest) [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/JocelynLeSage)
 
-This is a Docker container for [FreeFileSync](https://freefilesync.org).
+This project implements a Docker container for [FreeFileSync](https://freefilesync.org).
 
 The GUI of the application is accessed through a modern web browser (no
 installation or configuration needed on the client side) or via any VNC client.
@@ -76,6 +76,7 @@ docker run [-d] \
     [-p <HOST_PORT>:<CONTAINER_PORT>]... \
     jlesage/freefilesync
 ```
+
 | Parameter | Description |
 |-----------|-------------|
 | -d        | Run the container in the background.  If not set, the container runs in the foreground. |
@@ -322,11 +323,13 @@ Assuming that container's ports are mapped to the same host's ports, the
 graphical interface of the application can be accessed via:
 
   * A web browser:
+
 ```
 http://<HOST IP ADDR>:5800
 ```
 
   * Any VNC client:
+
 ```
 <HOST IP ADDR>:5900
 ```
