@@ -1,0 +1,11 @@
+--- a/FreeFileSync/Source/config.h	2023-05-11 14:28:49.206715184 -0400
++++ b/FreeFileSync/Source/config.h	2023-05-11 14:29:05.169469144 -0400
+@@ -242,7 +241,7 @@
+     std::vector<Zstring> commandHistory;
+     size_t commandHistoryMax = 10;
+ 
+-    std::vector<ExternalApp> externalApps{extCommandFileManager, extCommandOpenDefault};
++    std::vector<ExternalApp> externalApps{extCommandFileManager};
+ 
+     time_t lastUpdateCheck = 0; //number of seconds since Jan 1, 1970 GMT
+     std::string lastOnlineVersion;
