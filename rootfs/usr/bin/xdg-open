@@ -6,12 +6,20 @@ if [ -z "$ARG" ]; then
     exit 1
 fi
 
-case "$ARG" in
-    https://*|http://*)
-        /usr/lib/firefox-esr/firefox-esr-wrapper "$ARG"
-        ;;
-    *)
-        echo "don't know how to open: $ARG"
-        exit 1
-        ;;
-esac
+if [ -d "$ARG" ]; then
+    # We are trying to open a folder.
+    pcmanfm "$ARG" 2>/dev/null
+elif [ -f "$ARG" ] ; then
+    # We are trying to open a file.
+    pcmanfm "$(dirname "$ARG")" 2>/dev/null
+else
+    case "$ARG" in
+        https://*|http://*)
+            /usr/lib/firefox-esr/firefox-esr-wrapper "$ARG"
+            ;;
+        *)
+            echo "don't know how to open: $ARG"
+            exit 1
+            ;;
+    esac
+fi

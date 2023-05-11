@@ -65,6 +65,7 @@ RUN \
         librsvg \
         font-cantarell \
         adwaita-icon-theme \
+        pcmanfm \
         firefox-esr
 
 # Generate and install favicons.
