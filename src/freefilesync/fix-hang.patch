@@ -1,0 +1,175 @@
+Fix for hang described here: https://freefilesync.org/forum/viewtopic.php?t=10103
+--- a/FreeFileSync/Source/ui/abstract_folder_picker.cpp
++++ b/FreeFileSync/Source/ui/abstract_folder_picker.cpp
+@@ -127,7 +127,7 @@
+ 
+     //----------------------------------------------------------------------
+     GetSizer()->SetSizeHints(this); //~=Fit() + SetMinSize()
+-#ifdef __WXGTK3__
++#if 0 // __WXGTK3__
+     Show(); //GTK3 size calculation requires visible window: https://github.com/wxWidgets/wxWidgets/issues/16088
+     Hide(); //avoid old position flash when Center() moves window (asynchronously?)
+ #endif
+--- a/FreeFileSync/Source/ui/batch_config.cpp
++++ b/FreeFileSync/Source/ui/batch_config.cpp
+@@ -82,7 +82,7 @@
+     Bind(wxEVT_CHAR_HOOK, [this](wxKeyEvent& event) { onLocalKeyEvent(event); }); //enable dialog-specific key events
+ 
+     GetSizer()->SetSizeHints(this); //~=Fit() + SetMinSize()
+-#ifdef __WXGTK3__
++#if 0 // __WXGTK3__
+     Show(); //GTK3 size calculation requires visible window: https://github.com/wxWidgets/wxWidgets/issues/16088
+     Hide(); //avoid old position flash when Center() moves window (asynchronously?)
+ #endif
+--- a/FreeFileSync/Source/ui/progress_indicator.cpp
++++ b/FreeFileSync/Source/ui/progress_indicator.cpp
+@@ -221,7 +221,7 @@
+     m_panelTimeStats->Layout();
+ 
+     GetSizer()->SetSizeHints(this); //~=Fit() + SetMinSize()
+-#ifdef __WXGTK3__
++#if 0 // __WXGTK3__
+     Show(); //GTK3 size calculation requires visible window: https://github.com/wxWidgets/wxWidgets/issues/16088
+     Hide(); //avoid old position flash when Center() moves window (asynchronously?)
+ #endif
+@@ -902,7 +899,7 @@
+     //make sure that standard height matches ProcessPhase::comparingContent statistics layout (== largest)
+ 
+     this->GetSizer()->SetSizeHints(this); //~=Fit() + SetMinSize()
+-#ifdef __WXGTK3__
++#if 0 // __WXGTK3__
+     this->Show(); //GTK3 size calculation requires visible window: https://github.com/wxWidgets/wxWidgets/issues/16088
+     this->Hide(); //avoid old position flash when Center() moves window (asynchronously?)
+ #endif
+--- a/FreeFileSync/Source/ui/small_dlgs.cpp
++++ b/FreeFileSync/Source/ui/small_dlgs.cpp
+@@ -145,7 +145,7 @@
+     //--------------------------------------------------------------------------
+     //have animal + text match *final* dialog width
+     GetSizer()->SetSizeHints(this); //~=Fit() + SetMinSize()
+-#ifdef __WXGTK3__
++#if 0 // __WXGTK3__
+     Show(); //GTK3 size calculation requires visible window: https://github.com/wxWidgets/wxWidgets/issues/16088
+     Hide(); //avoid old position flash when Center() moves window (asynchronously?)
+ #endif
+@@ -164,7 +160,7 @@
+     Bind(wxEVT_CHAR_HOOK, [this](wxKeyEvent& event) { onLocalKeyEvent(event); }); //enable dialog-specific key events
+ 
+     GetSizer()->SetSizeHints(this); //~=Fit() + SetMinSize()
+-#ifdef __WXGTK3__
++#if 0 // __WXGTK3__
+     Show(); //GTK3 size calculation requires visible window: https://github.com/wxWidgets/wxWidgets/issues/16088
+     Hide(); //avoid old position flash when Center() moves window (asynchronously?)
+ #endif
+@@ -401,7 +394,7 @@
+ 
+     GetSizer()->SetSizeHints(this); //~=Fit() + SetMinSize()
+     //=> works like a charm for GTK with window resizing problems and title bar corruption; e.g. Debian!!!
+-#ifdef __WXGTK3__
++#if 0 // __WXGTK3__
+     Show(); //GTK3 size calculation requires visible window: https://github.com/wxWidgets/wxWidgets/issues/16088
+     Hide(); //avoid old position flash when Center() moves window (asynchronously?)
+ #endif
+@@ -973,7 +962,7 @@
+     Bind(wxEVT_CHAR_HOOK, [this](wxKeyEvent& event) { onLocalKeyEvent(event); }); //enable dialog-specific key events
+ 
+     GetSizer()->SetSizeHints(this); //~=Fit() + SetMinSize()
+-#ifdef __WXGTK3__
++#if 0 // __WXGTK3__
+     Show(); //GTK3 size calculation requires visible window: https://github.com/wxWidgets/wxWidgets/issues/16088
+     Hide(); //avoid old position flash when Center() moves window (asynchronously?)
+ #endif
+@@ -1091,7 +1077,7 @@
+     Bind(wxEVT_CHAR_HOOK, [this](wxKeyEvent& event) { onLocalKeyEvent(event); }); //enable dialog-specific key events
+ 
+     GetSizer()->SetSizeHints(this); //~=Fit() + SetMinSize()
+-#ifdef __WXGTK3__
++#if 0 // __WXGTK3__
+     Show(); //GTK3 size calculation requires visible window: https://github.com/wxWidgets/wxWidgets/issues/16088
+     Hide(); //avoid old position flash when Center() moves window (asynchronously?)
+ #endif
+@@ -1234,7 +1217,7 @@
+     setIntValue(*m_staticTextDeleteRight, st.deleteCount<SelectSide::right>(), *m_bitmapDeleteRight, "so_delete_right_sicon");
+ 
+     GetSizer()->SetSizeHints(this); //~=Fit() + SetMinSize()
+-#ifdef __WXGTK3__
++#if 0 // __WXGTK3__
+     Show(); //GTK3 size calculation requires visible window: https://github.com/wxWidgets/wxWidgets/issues/16088
+     Hide(); //avoid old position flash when Center() moves window (asynchronously?)
+ #endif
+@@ -1501,7+1481,7 @@
+     updateGui();
+ 
+     GetSizer()->SetSizeHints(this); //~=Fit() + SetMinSize()
+-#ifdef __WXGTK3__
++#if 0 // __WXGTK3__
+     Show(); //GTK3 size calculation requires visible window: https://github.com/wxWidgets/wxWidgets/issues/16088
+     Hide(); //avoid old position flash when Center() moves window (asynchronously?)
+ #endif
+@@ -1824,7 +1801,7 @@
+     Bind(wxEVT_CHAR_HOOK, [this](wxKeyEvent& event) { onLocalKeyEvent(event); }); //enable dialog-specific key events
+ 
+     GetSizer()->SetSizeHints(this); //~=Fit() + SetMinSize()
+-#ifdef __WXGTK3__
++#if 0 // __WXGTK3__
+     Show(); //GTK3 size calculation requires visible window: https://github.com/wxWidgets/wxWidgets/issues/16088
+     Hide(); //avoid old position flash when Center() moves window (asynchronously?)
+ #endif
+@@ -1923,7 +1897,7 @@
+     m_textCtrlPasswordVisible->Hide();
+ 
+     GetSizer()->SetSizeHints(this); //~=Fit() + SetMinSize()
+-#ifdef __WXGTK3__
++#if 0 // __WXGTK3__
+     Show(); //GTK3 size calculation requires visible window: https://github.com/wxWidgets/wxWidgets/issues/16088
+     Hide(); //avoid old position flash when Center() moves window (asynchronously?)
+ #endif
+@@ -2009,7 +1980,7 @@
+     m_spinCtrlOverdueDays->SetValue(cfgHistSyncOverdueDays);
+ 
+     GetSizer()->SetSizeHints(this); //~=Fit() + SetMinSize()
+-#ifdef __WXGTK3__
++#if 0 // __WXGTK3__
+     Show(); //GTK3 size calculation requires visible window: https://github.com/wxWidgets/wxWidgets/issues/16088
+     Hide(); //avoid old position flash when Center() moves window (asynchronously?)
+ #endif
+@@ -2078,7 +2046,7 @@
+     m_textCtrlOfflineActivationKey->ChangeValue(manualActivationKey);
+ 
+     GetSizer()->SetSizeHints(this); //~=Fit() + SetMinSize()
+-#ifdef __WXGTK3__
++#if 0 // __WXGTK3__
+     Show(); //GTK3 size calculation requires visible window: https://github.com/wxWidgets/wxWidgets/issues/16088
+     Hide(); //avoid old position flash when Center() moves window (asynchronously?)
+ #endif
+@@ -2186,7 +2151,7 @@
+     updateGui();
+ 
+     GetSizer()->SetSizeHints(this); //~=Fit() + SetMinSize()
+-#ifdef __WXGTK3__
++#if 0 // __WXGTK3__
+     Show(); //GTK3 size calculation requires visible window: https://github.com/wxWidgets/wxWidgets/issues/16088
+     Hide(); //avoid old position flash when Center() moves window (asynchronously?)
+ #endif
+--- a/FreeFileSync/Source/ui/sync_cfg.cpp
++++ b/FreeFileSync/Source/ui/sync_cfg.cpp
+@@ -678,7 +678,7 @@
+     selectFolderPairConfig(-1);
+ 
+     GetSizer()->SetSizeHints(this); //~=Fit() + SetMinSize()
+-#ifdef __WXGTK3__
++#if 0 // __WXGTK3__
+     Show(); //GTK3 size calculation requires visible window: https://github.com/wxWidgets/wxWidgets/issues/16088
+     Hide(); //avoid old position flash when Center() moves window (asynchronously?)
+ #endif
+--- a/wx+/popup_dlg.cpp
++++ b/wx+/popup_dlg.cpp
+@@ -272,7 +272,7 @@
+ 
+ 
+         GetSizer()->SetSizeHints(this); //~=Fit() + SetMinSize()
+-#ifdef __WXGTK3__
++#if 0 // __WXGTK3__
+     Show(); //GTK3 size calculation requires visible window: https://github.com/wxWidgets/wxWidgets/issues/16088
+     Hide(); //avoid old position flash when Center() moves window (asynchronously?)
+ #endif

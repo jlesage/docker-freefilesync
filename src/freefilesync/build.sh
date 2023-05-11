@@ -140,6 +140,7 @@ patch -p1 -d /tmp/freefilesync < "$SCRIPT_DIR"/compilation-fix.patch
 patch -p1 -d /tmp/freefilesync < "$SCRIPT_DIR"/disable-update.patch
 patch -p1 -d /tmp/freefilesync < "$SCRIPT_DIR"/client-credentials.patch
 patch -p1 -d /tmp/freefilesync < "$SCRIPT_DIR"/disable-open-with-default-app.patch
+patch -p1 -d /tmp/freefilesync < "$SCRIPT_DIR"/fix-hang.patch
 
 sed -i "s/GDRIVE_CLIENT_ID_K1\[\] = {}/GDRIVE_CLIENT_ID_K1\[\] = {${GOOGLE_CLIENT_ID_K1}}/" /tmp/freefilesync/FreeFileSync/Source/afs/gdrive.cpp
 sed -i "s/GDRIVE_CLIENT_ID_K2\[\] = {}/GDRIVE_CLIENT_ID_K2\[\] = {${GOOGLE_CLIENT_ID_K2}}/" /tmp/freefilesync/FreeFileSync/Source/afs/gdrive.cpp
