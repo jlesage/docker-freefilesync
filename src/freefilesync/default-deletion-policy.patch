@@ -1,0 +1,13 @@
+Change the default deletion policy to "permanent", since the recycle bin
+doesn't work in a Docker container.
+--- a/FreeFileSync/Source/base/structures.h	2023-05-12 14:42:44.000408473 -0400
++++ b/FreeFileSync/Source/base/structures.h	2023-05-12 14:42:54.592890231 -0400
+@@ -194,7 +194,7 @@
+     //sync direction settings
+     SyncDirectionConfig directionCfg;
+ 
+-    DeletionVariant deletionVariant = DeletionVariant::recycler; //use Recycle Bin, delete permanently or move to user-defined location
++    DeletionVariant deletionVariant = DeletionVariant::permanent; //use Recycle Bin, delete permanently or move to user-defined location
+ 
+     //versioning options
+     Zstring versioningFolderPhrase;

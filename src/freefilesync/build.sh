@@ -137,8 +137,9 @@ export CPPFLAGS="$CFLAGS"
 
 log "Patching FreeFileSync..."
 patch -p1 -d /tmp/freefilesync < "$SCRIPT_DIR"/compilation-fix.patch
-patch -p1 -d /tmp/freefilesync < "$SCRIPT_DIR"/disable-update.patch
 patch -p1 -d /tmp/freefilesync < "$SCRIPT_DIR"/client-credentials.patch
+patch -p1 -d /tmp/freefilesync < "$SCRIPT_DIR"/default-deletion-policy.patch
+patch -p1 -d /tmp/freefilesync < "$SCRIPT_DIR"/disable-update.patch
 patch -p1 -d /tmp/freefilesync < "$SCRIPT_DIR"/disable-open-with-default-app.patch
 patch -p1 -d /tmp/freefilesync < "$SCRIPT_DIR"/fix-hang.patch
 
