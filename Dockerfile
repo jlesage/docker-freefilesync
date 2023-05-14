@@ -65,6 +65,7 @@ RUN \
         librsvg \
         font-cantarell \
         adwaita-icon-theme \
+        supercronic \
         pcmanfm \
         firefox-esr
 

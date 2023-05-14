@@ -42,6 +42,7 @@ of data needed.
       * [Routing Based on Hostname](#routing-based-on-hostname)
       * [Routing Based on URL Path](#routing-based-on-url-path)
    * [Shell Access](#shell-access)
+   * [Scheduled Batch Jobs](#scheduled-batch-jobs)
    * [Support or Contact](#support-or-contact)
 
 ## Quick Start
@@ -516,6 +517,34 @@ docker exec -ti CONTAINER sh
 
 Where `CONTAINER` is the ID or the name of the container used during its
 creation.
+
+## Scheduled Batch Jobs
+
+This container provides an easy way to run FreeFileSync batch jobs according to
+a specified schedule.  One or more jobs can be configured via the following
+environment variables:
+
+- `FFS_SCHEDULED_BATCH_JOB_<ID>_NAME`: Name of the job.  Must match the file
+  name of the saved FreeFileSync synchronization configuration.
+- `FFS_SCHEDULED_BATCH_JOB_<ID>_CRON`: Cron expression of the schedule.  See
+  https://crontab.guru to create a valid Cron expression.
+
+Where `<ID>` is a numerical identifier of your choice.
+
+First, the synchronization configuration must be setup in FreeFileSync.  Once
+done, it has to be saved as a "batch Job", under `/config` inside the container.
+The name of the file, without the `.ffs_batch` extension, must match the name of
+the job set via the environment variable.
+
+For example, if `FFS_SCHEDULED_JOB_1_NAME` is set to `MyBackup1`, the
+FreeFileSync synchronization configuration should be saved to
+`/config/MyBackup1.ffs_batch`.
+
+**NOTE**: When saving a batch job, it is advised to enable the `Auto-close`
+option.  Else, the job won't run again unless its window is manually closed.
+
+**NOTE**: Make sure to first run the batch job from the UI to make sure there is
+no issue with the job itself.
 
 ## Support or Contact
 
