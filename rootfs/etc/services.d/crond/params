@@ -1,0 +1,17 @@
+#!/bin/sh
+
+set -e # Exit immediately if a command exits with a non-zero status.
+set -u # Treat unset variables as an error.
+
+# Passthrough logs from commands.
+echo "-passthrough-logs"
+
+# Enable debug if needed.
+if is-bool-val-true "${CONTAINER_DEBUG:-1}"; then
+    echo "-debug"
+fi
+
+# Specify the crontab file.
+echo "/tmp/ffs_batch_jobs.cron"
+
+# vim:ft=sh:ts=4:sw=4:et:sts=4
