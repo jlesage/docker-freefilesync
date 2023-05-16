@@ -1,5 +1,11 @@
 # Docker container for FreeFileSync
-[![Docker Image Size](https://img.shields.io/docker/image-size/jlesage/freefilesync/latest)](https://hub.docker.com/r/jlesage/freefilesync/tags) [![Build Status](https://github.com/jlesage/docker-freefilesync/actions/workflows/build-image.yml/badge.svg?branch=master)](https://github.com/jlesage/docker-freefilesync/actions/workflows/build-image.yml) [![GitHub Release](https://img.shields.io/github/release/jlesage/docker-freefilesync.svg)](https://github.com/jlesage/docker-freefilesync/releases/latest) [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/JocelynLeSage)
+[![Release](https://img.shields.io/github/release/jlesage/docker-freefilesync.svg?logo=github&style=for-the-badge)](https://github.com/jlesage/docker-freefilesync/releases/latest)
+[![Docker Image Size](https://img.shields.io/docker/image-size/jlesage/freefilesync/latest?logo=docker&style=for-the-badge)](https://hub.docker.com/r/jlesage/freefilesync/tags)
+[![Docker Pulls](https://img.shields.io/docker/pulls/jlesage/freefilesync?label=Pulls&logo=docker&style=for-the-badge)](https://hub.docker.com/r/jlesage/freefilesync)
+[![Docker Stars](https://img.shields.io/docker/stars/jlesage/freefilesync?label=Stars&logo=docker&style=for-the-badge)](https://hub.docker.com/r/jlesage/freefilesync)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/jlesage/docker-freefilesync/build-image.yml?logo=github&branch=master&style=for-the-badge)](https://github.com/jlesage/docker-freefilesync/actions/workflows/build-image.yml)
+[![Source](https://img.shields.io/badge/Source-GitHub-blue?logo=github&style=for-the-badge)](https://github.com/jlesage/docker-freefilesync)
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg?style=for-the-badge)](https://paypal.me/JocelynLeSage)
 
 This is a Docker container for [FreeFileSync](https://freefilesync.org).
 
