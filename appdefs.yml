@@ -1,0 +1,75 @@
+---
+
+#
+# Definitions for FreeFileSync docker container.
+#
+# This file is used as data source to generate README.md and unRAID template files
+# from Jinja2 templates.
+#
+
+app:
+  id: 23
+  name: freefilesync
+  friendly_name: FreeFileSync
+  gui_type: x11
+  project:
+    description: |-
+      FreeFileSync is a folder comparison and synchronization software that
+      creates and manages backup copies of all your important files. Instead
+      of copying every file every time, FreeFileSync determines the differences
+      between a source and a target folder and transfers only the minimum amount
+      of data needed.
+    url: https://freefilesync.org
+  unraid:
+    support_url: https://forums.unraid.net/topic/139295-support-freefilesync/
+    category: "Backup: Tools:"
+  documentation:
+    sections:
+      - title: Scheduled Batch Jobs
+        level: 2
+        content: |-
+          This container provides an easy way to run FreeFileSync batch jobs according to
+          a specified schedule.  One or more jobs can be configured via the following
+          environment variables:
+
+          - `FFS_SCHEDULED_BATCH_JOB_<ID>_NAME`: Name of the job.  Must match the file
+            name of the saved FreeFileSync synchronization configuration.
+          - `FFS_SCHEDULED_BATCH_JOB_<ID>_CRON`: Cron expression of the schedule.  See
+            https://crontab.guru to create a valid Cron expression.
+
+          Where `<ID>` is a numerical identifier of your choice.
+
+          First, the synchronization configuration must be setup in FreeFileSync.  Once
+          done, it has to be saved as a "batch Job", under `/config` inside the container.
+          The name of the file, without the `.ffs_batch` extension, must match the name of
+          the job set via the environment variable.
+
+          For example, if `FFS_SCHEDULED_JOB_1_NAME` is set to `MyBackup1`, the
+          FreeFileSync synchronization configuration should be saved to
+          `/config/MyBackup1.ffs_batch`.
+
+          **NOTE**: When saving a batch job, it is advised to enable the `Auto-close`
+          option.  Else, the job won't run again unless its window is manually closed.
+
+          **NOTE**: Make sure to first run the batch job from the UI to make sure there is
+          no issue with the job itself.
+  changelog:
+    - version: 23.05.1
+      date: 2024-05-15
+      changes:
+        - 'Initial release.'
+
+container:
+  storage_permissions: rw
+
+  # Environment variables.
+  environment_variables: []
+
+  # Volumes
+  volumes: []
+
+  # Network ports
+  ports: []
+
+  # Devices
+  devices: []
