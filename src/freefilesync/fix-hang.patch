@@ -170,6 +170,6 @@ Fix for hang described here: https://freefilesync.org/forum/viewtopic.php?t=1010
          GetSizer()->SetSizeHints(this); //~=Fit() + SetMinSize()
 -#ifdef __WXGTK3__
 +#if 0 // __WXGTK3__
-     Show(); //GTK3 size calculation requires visible window: https://github.com/wxWidgets/wxWidgets/issues/16088
-     Hide(); //avoid old position flash when Center() moves window (asynchronously?)
+         Show(); //GTK3 size calculation requires visible window: https://github.com/wxWidgets/wxWidgets/issues/16088
+         Hide(); //avoid old position flash when Center() moves window (asynchronously?)
  #endif
