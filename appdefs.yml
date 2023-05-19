@@ -54,6 +54,13 @@ app:
           **NOTE**: Make sure to first run the batch job from the UI to make sure there is
           no issue with the job itself.
   changelog:
+    - version: 23.05.2
+      date: 2023-05-19
+      changes:
+        - 'Updated FreeFileSync to version 12.3.'
+        - 'Updated baseimage to version 4.4.2, which brings the following changes:'
+        - '2:Rebuilt against latest distro images to get security fixes.'
+        - '2:Updated X server to version 1.20.14.'
     - version: 23.05.1
       date: 2024-05-15
       changes:
