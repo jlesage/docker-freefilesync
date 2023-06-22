@@ -8,12 +8,14 @@
 ARG DOCKER_IMAGE_VERSION=
 
 # Define software versions.
-ARG FREEFILESYNC_VERSION=12.3
+ARG FREEFILESYNC_VERSION=12.4
 ARG WXWIDGETS_VERSION=3.2.2.1
+ARG LIBSSH2_VERSION=1.11.0
 
 # Define software download URLs.
 ARG FREEFILESYNC_URL=https://freefilesync.org/download/FreeFileSync_${FREEFILESYNC_VERSION}_Source.zip
 ARG WXWIDGETS_URL=https://github.com/wxWidgets/wxWidgets/releases/download/v${WXWIDGETS_VERSION}/wxWidgets-${WXWIDGETS_VERSION}.tar.bz2
+ARG LIBSSH2_URL=http://www.libssh2.org/download/libssh2-${LIBSSH2_VERSION}.tar.gz
 
 # Google API client ID and secret to enable Sign-in with Google.
 ARG GOOGLE_CLIENT_ID_K1=
@@ -29,6 +31,7 @@ FROM --platform=$BUILDPLATFORM alpine:3.17 AS freefilesync
 ARG TARGETPLATFORM
 ARG FREEFILESYNC_URL
 ARG WXWIDGETS_URL
+ARG LIBSSH2_URL
 ARG GOOGLE_CLIENT_ID_K1
 ARG GOOGLE_CLIENT_ID_K2
 ARG GOOGLE_CLIENT_SECRET_K1
@@ -38,6 +41,7 @@ COPY src/freefilesync /build
 RUN /build/build.sh \
     "$FREEFILESYNC_URL" \
     "$WXWIDGETS_URL" \
+    "$LIBSSH2_URL" \
     "$GOOGLE_CLIENT_ID_K1" \
     "$GOOGLE_CLIENT_ID_K2" \
     "$GOOGLE_CLIENT_SECRET_K1" \
@@ -59,7 +63,6 @@ RUN \
     add-pkg \
         gtk+3.0 \
         libcurl \
-        libssh2 \
         libsm \
         libxxf86vm \
         librsvg \

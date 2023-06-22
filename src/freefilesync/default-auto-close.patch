@@ -1,11 +1,11 @@
 --- a/FreeFileSync/Source/config.h	2023-05-11 14:28:49.206715184 -0400
 +++ b/FreeFileSync/Source/config.h	2023-05-14 18:24:59.735829487 -0400
 @@ -57,7 +56,7 @@
+ struct BatchExclusiveConfig
  {
-     BatchErrorHandling batchErrorHandling = BatchErrorHandling::showPopup;
      bool runMinimized = false;
 -    bool autoCloseSummary = false;
 +    bool autoCloseSummary = true;
+     BatchErrorHandling batchErrorHandling = BatchErrorHandling::showPopup;
      PostSyncAction postSyncAction = PostSyncAction::none;
  };
- 

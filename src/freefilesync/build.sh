@@ -29,10 +29,11 @@ function log {
 
 FREEFILESYNC_URL="${1:-}"
 WXWIDGETS_URL="${2:-}"
-GOOGLE_CLIENT_ID_K1="${3:-}"
-GOOGLE_CLIENT_ID_K2="${4:-}"
-GOOGLE_CLIENT_SECRET_K1="${5:-}"
-GOOGLE_CLIENT_SECRET_K2="${6:-}"
+LIBSSH2_URL="${3:-}"
+GOOGLE_CLIENT_ID_K1="${4:-}"
+GOOGLE_CLIENT_ID_K2="${5:-}"
+GOOGLE_CLIENT_SECRET_K1="${6:-}"
+GOOGLE_CLIENT_SECRET_K2="${7:-}"
 
 if [ -z "$FREEFILESYNC_URL" ]; then
     log "ERROR: FreeFileSync URL missing."
@@ -41,6 +42,11 @@ fi
 
 if [ -z "$WXWIDGETS_URL" ]; then
     log "ERROR: wxWidgets URL missing."
+    exit 1
+fi
+
+if [ -z "$LIBSSH2_URL" ]; then
+    log "ERROR: libssh2 URL missing."
     exit 1
 fi
 
@@ -66,7 +72,6 @@ fi
 
 xx-apk --no-cache --no-scripts add \
     openssl-dev \
-    libssh2-dev \
     curl-dev \
     gtk+3.0-dev \
     libsm-dev \
@@ -102,6 +107,10 @@ log "Download wxWidgets package..."
 mkdir /tmp/wxwidgets
 curl -# -L -f "${WXWIDGETS_URL}" | tar xj --strip 1 -C /tmp/wxwidgets
 
+log "Download libssh2 package..."
+mkdir /tmp/libssh2
+curl -# -L -f "${LIBSSH2_URL}" | tar xz --strip 1 -C /tmp/libssh2
+
 #
 # Compile wxWidgets.
 #
@@ -126,6 +135,26 @@ make -C /tmp/wxwidgets install
 if xx-info is-cross; then
     ln -s $(xx-info sysroot)usr/bin/wx-config /usr/bin/wx-config
 fi
+
+#
+# Compile libssh2.
+#
+
+log "Configuring libssh2..."
+(
+    cd /tmp/libssh2 && ./configure \
+        --build=$(TARGETPLATFORM= xx-info) \
+        --host=$(xx-info) \
+        --prefix=$(xx-info sysroot)usr \
+        --disable-shared \
+        --with-crypto=openssl \
+)
+
+log "Compiling libssh2..."
+make -C /tmp/libssh2 -j$(nproc)
+
+log "Installing libssh2..."
+make -C /tmp/libssh2 install
 
 #
 # Compile FreeFileSync.
