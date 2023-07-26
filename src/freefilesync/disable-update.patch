@@ -2,54 +2,54 @@
 +++ b/FreeFileSync/Source/ui/gui_generated.cpp	2023-05-17 16:48:40.285443521 -0400
 @@ -110,12 +110,14 @@
  
-     m_menuHelp->AppendSeparator();
+ 	m_menuHelp->AppendSeparator();
  
 +#if 0
-     m_menuItemCheckVersionNow = new wxMenuItem( m_menuHelp, wxID_ANY, wxString( _("&Check for updates now") ), wxEmptyString, wxITEM_NORMAL );
-     m_menuHelp->Append( m_menuItemCheckVersionNow );
+ 	m_menuItemCheckVersionNow = new wxMenuItem( m_menuHelp, wxID_ANY, wxString( _("&Check for updates now") ) , wxEmptyString, wxITEM_NORMAL );
+ 	m_menuHelp->Append( m_menuItemCheckVersionNow );
  
-     m_menuItemCheckVersionAuto = new wxMenuItem( m_menuHelp, wxID_ANY, wxString( _("Check &automatically once a week") ), wxEmptyString, wxITEM_CHECK );
-     m_menuHelp->Append( m_menuItemCheckVersionAuto );
-     m_menuItemCheckVersionAuto->Check( true );
+ 	m_menuItemCheckVersionAuto = new wxMenuItem( m_menuHelp, wxID_ANY, wxString( _("Check &automatically once a week") ) , wxEmptyString, wxITEM_CHECK );
+ 	m_menuHelp->Append( m_menuItemCheckVersionAuto );
+ 	m_menuItemCheckVersionAuto->Check( true );
 +#endif
  
-     m_menuHelp->AppendSeparator();
+ 	m_menuHelp->AppendSeparator();
  
 @@ -1129,8 +1131,10 @@
-     m_menuTools->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainDialogGenerated::onMenuExportFileList ), this, m_menuItemExportList->GetId());
-     m_menuTools->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainDialogGenerated::onMenuResetLayout ), this, m_menuItemResetLayout->GetId());
-     m_menuHelp->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainDialogGenerated::onShowHelp ), this, m_menuItemHelp->GetId());
+ 	m_menuTools->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainDialogGenerated::onMenuExportFileList ), this, m_menuItemExportList->GetId());
+ 	m_menuTools->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainDialogGenerated::onMenuResetLayout ), this, m_menuItemResetLayout->GetId());
+ 	m_menuHelp->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainDialogGenerated::onShowHelp ), this, m_menuItemHelp->GetId());
 +#if 0
-     m_menuHelp->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainDialogGenerated::onMenuCheckVersion ), this, m_menuItemCheckVersionNow->GetId());
-     m_menuHelp->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainDialogGenerated::onMenuCheckVersionAutomatically ), this, m_menuItemCheckVersionAuto->GetId());
+ 	m_menuHelp->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainDialogGenerated::onMenuCheckVersion ), this, m_menuItemCheckVersionNow->GetId());
+ 	m_menuHelp->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainDialogGenerated::onMenuCheckVersionAutomatically ), this, m_menuItemCheckVersionAuto->GetId());
 +#endif
-     m_menuHelp->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainDialogGenerated::onMenuAbout ), this, m_menuItemAbout->GetId());
-     m_buttonCompare->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MainDialogGenerated::onCompare ), NULL, this );
-     m_bpButtonCmpConfig->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MainDialogGenerated::onCmpSettings ), NULL, this );
+ 	m_menuHelp->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainDialogGenerated::onMenuAbout ), this, m_menuItemAbout->GetId());
+ 	m_buttonCompare->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MainDialogGenerated::onCompare ), NULL, this );
+ 	m_bpButtonCmpConfig->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MainDialogGenerated::onCmpSettings ), NULL, this );
 --- a/FreeFileSync/Source/ui/gui_generated.h	2023-05-17 16:48:54.247350906 -0400
 +++ b/FreeFileSync/Source/ui/gui_generated.h	2023-05-17 16:49:21.895048856 -0400
 @@ -96,8 +96,10 @@
-     wxMenuItem* m_menuItemShowOverview;
-     wxMenu* m_menuHelp;
-     wxMenuItem* m_menuItemHelp;
+ 		wxMenuItem* m_menuItemShowOverview;
+ 		wxMenu* m_menuHelp;
+ 		wxMenuItem* m_menuItemHelp;
 +#if 0
-     wxMenuItem* m_menuItemCheckVersionNow;
-     wxMenuItem* m_menuItemCheckVersionAuto;
+ 		wxMenuItem* m_menuItemCheckVersionNow;
+ 		wxMenuItem* m_menuItemCheckVersionAuto;
 +#endif
-     wxMenuItem* m_menuItemAbout;
-     wxBoxSizer* bSizerPanelHolder;
-     wxPanel* m_panelTopButtons;
+ 		wxMenuItem* m_menuItemAbout;
+ 		wxBoxSizer* bSizerPanelHolder;
+ 		wxPanel* m_panelTopButtons;
 @@ -234,8 +236,10 @@
-     virtual void onMenuExportFileList( wxCommandEvent& event ) { event.Skip(); }
-     virtual void onMenuResetLayout( wxCommandEvent& event ) { event.Skip(); }
-     virtual void onShowHelp( wxCommandEvent& event ) { event.Skip(); }
+ 		virtual void onMenuExportFileList( wxCommandEvent& event ) { event.Skip(); }
+ 		virtual void onMenuResetLayout( wxCommandEvent& event ) { event.Skip(); }
+ 		virtual void onShowHelp( wxCommandEvent& event ) { event.Skip(); }
 +#if 0
-     virtual void onMenuCheckVersion( wxCommandEvent& event ) { event.Skip(); }
-     virtual void onMenuCheckVersionAutomatically( wxCommandEvent& event ) { event.Skip(); }
+ 		virtual void onMenuCheckVersion( wxCommandEvent& event ) { event.Skip(); }
+ 		virtual void onMenuCheckVersionAutomatically( wxCommandEvent& event ) { event.Skip(); }
 +#endif
-     virtual void onMenuAbout( wxCommandEvent& event ) { event.Skip(); }
-     virtual void onCompSettingsContextMouse( wxMouseEvent& event ) { event.Skip(); }
-     virtual void onCompSettingsContext( wxCommandEvent& event ) { event.Skip(); }
+ 		virtual void onMenuAbout( wxCommandEvent& event ) { event.Skip(); }
+ 		virtual void onCompSettingsContextMouse( wxMouseEvent& event ) { event.Skip(); }
+ 		virtual void onCompSettingsContext( wxCommandEvent& event ) { event.Skip(); }
 --- a/FreeFileSync/Source/ui/main_dlg.cpp	2023-05-17 16:49:45.977238207 -0400
 +++ b/FreeFileSync/Source/ui/main_dlg.cpp	2023-05-17 16:51:13.174131867 -0400
 @@ -30,7 +30,9 @@
