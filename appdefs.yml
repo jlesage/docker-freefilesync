@@ -54,6 +54,10 @@ app:
           **NOTE**: Make sure to first run the batch job from the UI to make sure there is
           no issue with the job itself.
   changelog:
+    - version: 23.07.1
+      date: 2023-07-28
+      changes:
+        - 'Updated FreeFileSync to version 12.5.'
     - version: 23.06.1
       date: 2023-06-22
       changes:
