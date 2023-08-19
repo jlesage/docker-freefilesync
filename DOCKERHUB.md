@@ -26,8 +26,9 @@ of data needed.
 
 ## Quick Start
 
-**NOTE**: The Docker command provided in this quick start is given as an example
-and parameters should be adjusted to your need.
+**NOTE**:
+    The Docker command provided in this quick start is given as an example
+    and parameters should be adjusted to your need.
 
 Launch the FreeFileSync docker container with the following command:
 ```shell
@@ -40,6 +41,7 @@ docker run -d \
 ```
 
 Where:
+
   - `/docker/appdata/freefilesync`: This is where the application stores its configuration, states, log and any files needing persistency.
   - `/home/user`: This location contains files from your host that need to be accessible to the application.
 
