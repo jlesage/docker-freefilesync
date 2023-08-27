@@ -1,0 +1,14 @@
+Support for the `getentropy()` function has been added to Linux Kernel 3.17.
+Some devices (e.g. Synology running the latest DSM) still have older kernel.
+See https://github.com/jlesage/docker-freefilesync/issues/8
+--- a/zen/guid.h.orig	2023-08-26 20:15:21.278084681 -0400
++++ b/zen/guid.h	2023-08-26 20:16:46.770265821 -0400
+@@ -24,7 +24,7 @@
+ #error Where is Glibc?
+ #endif
+ 
+-#if __GLIBC_PREREQ(2, 25) //getentropy() requires Glibc 2.25 (ldd --version) PS: CentOS 7 is on 2.17
++#if 0 // __GLIBC_PREREQ(2, 25) //getentropy() requires Glibc 2.25 (ldd --version) PS: CentOS 7 is on 2.17
+     if (::getentropy(guid.data(), guid.size()) != 0)  //"The maximum permitted value for the length argument is 256"
+         throw std::runtime_error(std::string(__FILE__) + '[' + numberTo<std::string>(__LINE__) + "] Failed to generate GUID." + "\n\n" +
+                                  utfTo<std::string>(formatSystemError("getentropy", errno)));
