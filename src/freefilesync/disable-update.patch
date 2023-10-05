@@ -1,6 +1,6 @@
---- a/FreeFileSync/Source/ui/gui_generated.cpp	2023-05-17 16:47:51.032604276 -0400
-+++ b/FreeFileSync/Source/ui/gui_generated.cpp	2023-05-17 16:48:40.285443521 -0400
-@@ -110,12 +110,14 @@
+--- a/FreeFileSync/Source/ui/gui_generated.cpp	2023-10-01 09:45:00.211330193 -0400
++++ b/FreeFileSync/Source/ui/gui_generated.cpp	2023-10-01 09:46:31.963576075 -0400
+@@ -110,10 +110,12 @@
  
  	m_menuHelp->AppendSeparator();
  
@@ -8,51 +8,46 @@
  	m_menuItemCheckVersionNow = new wxMenuItem( m_menuHelp, wxID_ANY, wxString( _("&Check for updates now") ) , wxEmptyString, wxITEM_NORMAL );
  	m_menuHelp->Append( m_menuItemCheckVersionNow );
  
- 	m_menuItemCheckVersionAuto = new wxMenuItem( m_menuHelp, wxID_ANY, wxString( _("Check &automatically once a week") ) , wxEmptyString, wxITEM_CHECK );
- 	m_menuHelp->Append( m_menuItemCheckVersionAuto );
- 	m_menuItemCheckVersionAuto->Check( true );
+ 	m_menuHelp->AppendSeparator();
 +#endif
  
- 	m_menuHelp->AppendSeparator();
- 
-@@ -1129,8 +1131,10 @@
+ 	m_menuItemAbout = new wxMenuItem( m_menuHelp, wxID_ABOUT, wxString( _("&About") ) + wxT('\t') + wxT("Shift+F1"), wxEmptyString, wxITEM_NORMAL );
+ 	m_menuHelp->Append( m_menuItemAbout );
+@@ -1125,7 +1127,9 @@
  	m_menuTools->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainDialogGenerated::onMenuExportFileList ), this, m_menuItemExportList->GetId());
  	m_menuTools->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainDialogGenerated::onMenuResetLayout ), this, m_menuItemResetLayout->GetId());
  	m_menuHelp->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainDialogGenerated::onShowHelp ), this, m_menuItemHelp->GetId());
 +#if 0
  	m_menuHelp->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainDialogGenerated::onMenuCheckVersion ), this, m_menuItemCheckVersionNow->GetId());
- 	m_menuHelp->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainDialogGenerated::onMenuCheckVersionAutomatically ), this, m_menuItemCheckVersionAuto->GetId());
 +#endif
  	m_menuHelp->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainDialogGenerated::onMenuAbout ), this, m_menuItemAbout->GetId());
  	m_buttonCompare->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MainDialogGenerated::onCompare ), NULL, this );
  	m_bpButtonCmpConfig->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MainDialogGenerated::onCmpSettings ), NULL, this );
---- a/FreeFileSync/Source/ui/gui_generated.h	2023-05-17 16:48:54.247350906 -0400
-+++ b/FreeFileSync/Source/ui/gui_generated.h	2023-05-17 16:49:21.895048856 -0400
-@@ -96,8 +96,10 @@
+--- a/FreeFileSync/Source/ui/gui_generated.h	2023-10-01 09:45:05.811345211 -0400
++++ b/FreeFileSync/Source/ui/gui_generated.h	2023-10-01 09:47:02.915658962 -0400
+@@ -96,7 +96,9 @@
  		wxMenuItem* m_menuItemShowOverview;
  		wxMenu* m_menuHelp;
  		wxMenuItem* m_menuItemHelp;
 +#if 0
  		wxMenuItem* m_menuItemCheckVersionNow;
- 		wxMenuItem* m_menuItemCheckVersionAuto;
 +#endif
  		wxMenuItem* m_menuItemAbout;
  		wxBoxSizer* bSizerPanelHolder;
  		wxPanel* m_panelTopButtons;
-@@ -234,8 +236,10 @@
+@@ -233,7 +235,9 @@
  		virtual void onMenuExportFileList( wxCommandEvent& event ) { event.Skip(); }
  		virtual void onMenuResetLayout( wxCommandEvent& event ) { event.Skip(); }
  		virtual void onShowHelp( wxCommandEvent& event ) { event.Skip(); }
 +#if 0
  		virtual void onMenuCheckVersion( wxCommandEvent& event ) { event.Skip(); }
- 		virtual void onMenuCheckVersionAutomatically( wxCommandEvent& event ) { event.Skip(); }
 +#endif
  		virtual void onMenuAbout( wxCommandEvent& event ) { event.Skip(); }
  		virtual void onCompSettingsContextMouse( wxMouseEvent& event ) { event.Skip(); }
  		virtual void onCompSettingsContext( wxCommandEvent& event ) { event.Skip(); }
---- a/FreeFileSync/Source/ui/main_dlg.cpp	2023-05-17 16:49:45.977238207 -0400
-+++ b/FreeFileSync/Source/ui/main_dlg.cpp	2023-05-17 16:51:13.174131867 -0400
-@@ -30,7 +30,9 @@
+--- a/FreeFileSync/Source/ui/main_dlg.cpp	2023-10-01 09:45:25.419397775 -0400
++++ b/FreeFileSync/Source/ui/main_dlg.cpp	2023-10-01 09:50:11.544163530 -0400
+@@ -32,7 +32,9 @@
  #include <wx+/window_tools.h>
  #include <wx+/image_resources.h>
  #include "cfg_grid.h"
@@ -61,8 +56,8 @@
 +#endif
  #include "gui_status_handler.h"
  #include "small_dlgs.h"
- #include "progress_indicator.h"
-@@ -843,7 +845,9 @@
+ #include "rename_dlg.h"
+@@ -861,7 +863,9 @@
  
      setImage(*m_menuItemHelp,            loadImage("help",         getDefaultMenuIconSize()));
      setImage(*m_menuItemAbout,           loadImage("about",        getDefaultMenuIconSize()));
@@ -72,27 +67,18 @@
  
      fixMenuIcons(*m_menuFile);
      fixMenuIcons(*m_menuActions);
-@@ -944,7 +948,9 @@
+@@ -961,8 +965,10 @@
+     //mainly to update row label sizes...
      updateGui();
  
-     //register regular check for update on next idle event
 +#if 0
+     //register regular check for update on next idle event
      Bind(wxEVT_IDLE, &MainDialog::onStartupUpdateCheck, this);
 +#endif
  
-     //asynchronous call to wxWindow::Layout(): fix superfluous frame on right and bottom when FFS is started in fullscreen mode
+     //asynchronous call to wxWindow::Dimensions(): fix superfluous frame on right and bottom when FFS is started in fullscreen mode
      Bind(wxEVT_IDLE, &MainDialog::onLayoutWindowAsync, this);
-@@ -1138,7 +1144,9 @@
-     auiMgr_.GetPane(m_panelSearch).Hide(); //no need to show it on startup
-     auiMgr_.GetPane(m_panelLog   ).Hide(); //
- 
-+#if 0
-     m_menuItemCheckVersionAuto->Check(updateCheckActive(globalCfg_.lastUpdateCheck));
-+#endif
- 
-     auiMgr_.Update();
- }
-@@ -5908,6 +5916,7 @@
+@@ -6238,6 +6244,7 @@
  }
  
  
@@ -100,7 +86,7 @@
  void MainDialog::onMenuCheckVersion(wxCommandEvent& event)
  {
      checkForUpdateNow(*this, globalCfg_.lastOnlineVersion);
-@@ -5971,6 +5980,7 @@
+@@ -6282,6 +6289,7 @@
      else
          showNewVersionReminder();
  }
@@ -108,9 +94,9 @@
  
  
  void MainDialog::onLayoutWindowAsync(wxIdleEvent& event)
---- a/FreeFileSync/Source/ui/main_dlg.h	2023-05-17 16:51:27.180057880 -0400
-+++ b/FreeFileSync/Source/ui/main_dlg.h	2023-05-17 16:51:57.092714146 -0400
-@@ -199,7 +199,9 @@
+--- a/FreeFileSync/Source/ui/main_dlg.h	2023-10-01 09:45:30.031410135 -0400
++++ b/FreeFileSync/Source/ui/main_dlg.h	2023-10-01 09:51:06.704310888 -0400
+@@ -202,7 +202,9 @@
      void removeSelectedCfgHistoryItems(bool removeFromDisk);
      void renameSelectedCfgHistoryItem();
  
@@ -120,13 +106,12 @@
      void onLayoutWindowAsync (wxIdleEvent& event);
  
      void onResizeLeftFolderWidth(wxEvent& event);
-@@ -275,8 +277,10 @@
+@@ -273,7 +275,9 @@
      void onMenuExportFileList (wxCommandEvent& event) override;
      void onMenuResetLayout    (wxCommandEvent& event) override { resetLayout(); }
      void onMenuFindItem       (wxCommandEvent& event) override { showFindPanel(true /*show*/); } //CTRL + F
 +#if 0
      void onMenuCheckVersion   (wxCommandEvent& event) override;
-     void onMenuCheckVersionAutomatically(wxCommandEvent& event) override;
 +#endif
      void onMenuAbout          (wxCommandEvent& event) override;
      void onShowHelp           (wxCommandEvent& event) override { wxLaunchDefaultBrowser(L"https://freefilesync.org/manual.php?topic=freefilesync"); }
