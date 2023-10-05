@@ -174,6 +174,7 @@ PATCHES="
     disable-open-with-default-app.patch
     fix-hang.patch
     disable-getentropy.patch
+    disable-minimize-to-tray.patch
 "
 for PATCH in $PATCHES; do
     log "Applying $PATCH..."

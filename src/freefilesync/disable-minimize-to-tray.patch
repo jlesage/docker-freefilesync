@@ -1,0 +1,80 @@
+--- a/FreeFileSync/Source/ui/gui_generated.cpp	2023-10-01 09:45:00.211330193 -0400
++++ b/FreeFileSync/Source/ui/gui_generated.cpp	2023-10-01 22:35:30.501411803 -0400
+@@ -3829,10 +3833,12 @@
+ 
+ 	bSizer247->Add( 0, 0, 1, 0, 5 );
+ 
++#if 0
+ 	m_bpButtonMinimizeToTray = new wxBitmapButton( m_panel53, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxSize( -1,-1 ), wxBU_AUTODRAW|0 );
+ 	m_bpButtonMinimizeToTray->SetToolTip( _("Minimize to notification area") );
+ 
+ 	bSizer247->Add( m_bpButtonMinimizeToTray, 0, wxALIGN_CENTER_VERTICAL, 5 );
++#endif
+ 
+ 
+ 	bSizer42->Add( bSizer247, 1, wxALIGN_CENTER_VERTICAL, 5 );
+@@ -4283,8 +4289,10 @@
+ 	ffgSizer11->SetFlexibleDirection( wxBOTH );
+ 	ffgSizer11->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+ 
++#if 0
+ 	m_bitmapMinimizeToTray = new wxStaticBitmap( m_panel35, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, 0 );
+ 	ffgSizer11->Add( m_bitmapMinimizeToTray, 0, wxALIGN_CENTER_VERTICAL, 5 );
++#endif
+ 
+ 	m_checkBoxRunMinimized = new wxCheckBox( m_panel35, wxID_ANY, _("Run minimized"), wxDefaultPosition, wxDefaultSize, 0 );
+ 	ffgSizer11->Add( m_checkBoxRunMinimized, 0, wxEXPAND|wxALIGN_CENTER_VERTICAL, 5 );
+--- a/FreeFileSync/Source/ui/gui_generated.h	2023-10-01 09:45:05.811345211 -0400
++++ b/FreeFileSync/Source/ui/gui_generated.h	2023-10-01 22:35:50.069460201 -0400
+@@ -863,7 +867,9 @@
+ 		wxStaticBitmap* m_bitmapStatus;
+ 		wxStaticText* m_staticTextPhase;
+ 		wxStaticText* m_staticTextPercentTotal;
++#if 0
+ 		wxBitmapButton* m_bpButtonMinimizeToTray;
++#endif
+ 		wxBoxSizer* bSizerStatusText;
+ 		wxStaticText* m_staticTextStatus;
+ 		wxPanel* m_panelProgress;
+--- a/FreeFileSync/Source/ui/progress_indicator.cpp	2023-10-02 17:07:53.344092747 -0400
++++ b/FreeFileSync/Source/ui/progress_indicator.cpp	2023-10-02 17:10:33.512515516 -0400
+@@ -824,7 +824,9 @@
+     pnl_.m_buttonClose           ->Bind(wxEVT_COMMAND_BUTTON_CLICKED, [this](wxCommandEvent& event) { closePressed_ = true; });
+     pnl_.m_buttonPause           ->Bind(wxEVT_COMMAND_BUTTON_CLICKED, [this](wxCommandEvent& event) { onPause(event); });
+     pnl_.m_buttonStop            ->Bind(wxEVT_COMMAND_BUTTON_CLICKED, [this](wxCommandEvent& event) { onCancel(event); });
++#if 0
+     pnl_.m_bpButtonMinimizeToTray->Bind(wxEVT_COMMAND_BUTTON_CLICKED, [this](wxCommandEvent& event) { minimizeToTray(); });
++#endif
+ 
+     if (parentFrame_)
+         parentFrame_->Bind(wxEVT_CHAR_HOOK, &SyncProgressDialogImpl::onParentKeyEvent, this);
+@@ -855,7 +857,9 @@
+     //set std order after button visibility was set
+     setStandardButtonLayout(*pnl_.bSizerStdButtons, StdButtons().setAffirmative(pnl_.m_buttonPause).setCancel(pnl_.m_buttonStop));
+ 
++#if 0
+     setImage(*pnl_.m_bpButtonMinimizeToTray, loadImage("minimize_to_tray"));
++#endif
+ 
+     setImage(*pnl_.m_bitmapItemStat, IconBuffer::genericFileIcon(IconBuffer::IconSize::small));
+     setImage(*pnl_.m_bitmapTimeStat, loadImage("time", -1 /*maxWidth*/, IconBuffer::getSize(IconBuffer::IconSize::small)));
+@@ -1462,7 +1466,9 @@
+ 
+     //this->EnableCloseButton(true);
+ 
++#if 0
+     pnl_.m_bpButtonMinimizeToTray->Hide();
++#endif
+     pnl_.m_buttonStop->Disable();
+     pnl_.m_buttonStop->Hide();
+     pnl_.m_buttonPause->Disable();
+@@ -1703,7 +1709,9 @@
+             if (parentFrame_)
+                 parentFrame_->Raise();
+             this->Raise();
++#if 0
+             pnl_.m_bpButtonMinimizeToTray->SetFocus();
++#endif
+         }
+     }
+ }
