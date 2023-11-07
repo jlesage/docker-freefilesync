@@ -124,6 +124,7 @@ log "Configuring wxWidgets..."
         --disable-shared \
         --enable-unicode \
         --disable-xlocale \
+        --disable-exceptions \
         --with-gtk=3 \
 )
 
