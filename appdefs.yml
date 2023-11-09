@@ -12,6 +12,7 @@ app:
   name: freefilesync
   friendly_name: FreeFileSync
   gui_type: x11
+  base_os: alpine
   project:
     description: |-
       FreeFileSync is a folder comparison and synchronization software that
