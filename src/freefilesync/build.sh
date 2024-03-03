@@ -167,6 +167,7 @@ export CPPFLAGS="$CFLAGS"
 
 log "Patching FreeFileSync..."
 PATCHES="
+    libcurl_improve_supported_error_codes.patch
     compilation-fix.patch
     client-credentials.patch
     default-deletion-policy.patch

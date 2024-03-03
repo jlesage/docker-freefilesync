@@ -8,7 +8,7 @@ Fix for hang described here: https://freefilesync.org/forum/viewtopic.php?t=1010
 -#ifdef __WXGTK3__
 +#if 0 // __WXGTK3__
      Show(); //GTK3 size calculation requires visible window: https://github.com/wxWidgets/wxWidgets/issues/16088
-     Hide(); //avoid old position flash when Center() moves window (asynchronously?)
+     //Hide(); -> avoids old position flash before Center() on GNOME but causes hang on KDE? https://freefilesync.org/forum/viewtopic.php?t=10103#p42404
  #endif
 --- a/FreeFileSync/Source/ui/batch_config.cpp
 +++ b/FreeFileSync/Source/ui/batch_config.cpp
@@ -19,27 +19,27 @@ Fix for hang described here: https://freefilesync.org/forum/viewtopic.php?t=1010
 -#ifdef __WXGTK3__
 +#if 0 // __WXGTK3__
      Show(); //GTK3 size calculation requires visible window: https://github.com/wxWidgets/wxWidgets/issues/16088
-     Hide(); //avoid old position flash when Center() moves window (asynchronously?)
+     //Hide(); -> avoids old position flash before Center() on GNOME but causes hang on KDE? https://freefilesync.org/forum/viewtopic.php?t=10103#p42404
  #endif
 --- a/FreeFileSync/Source/ui/progress_indicator.cpp
 +++ b/FreeFileSync/Source/ui/progress_indicator.cpp
-@@ -221,7 +221,7 @@
-     m_panelTimeStats->Layout();
+@@ -218,7 +218,7 @@
+     m_panelErrorStats->Layout();
  
      GetSizer()->SetSizeHints(this); //~=Fit() + SetMinSize()
 -#ifdef __WXGTK3__
 +#if 0 // __WXGTK3__
-     Show(); //GTK3 size calculation requires visible window: https://github.com/wxWidgets/wxWidgets/issues/16088
-     Hide(); //avoid old position flash when Center() moves window (asynchronously?)
+     //Show(); //GTK3 size calculation requires visible window: https://github.com/wxWidgets/wxWidgets/issues/16088
+     //Hide(); -> avoids old position flash before Center() on GNOME but causes hang on KDE? https://freefilesync.org/forum/viewtopic.php?t=10103#p42404
  #endif
-@@ -902,7 +899,7 @@
-     //make sure that standard height matches ProcessPhase::comparingContent statistics layout (== largest)
+@@ -922,7 +922,7 @@
+     //make sure that standard height matches ProcessPhase::binaryCompare statistics layout (== largest)
  
      this->GetSizer()->SetSizeHints(this); //~=Fit() + SetMinSize()
 -#ifdef __WXGTK3__
 +#if 0 // __WXGTK3__
      this->Show(); //GTK3 size calculation requires visible window: https://github.com/wxWidgets/wxWidgets/issues/16088
-     this->Hide(); //avoid old position flash when Center() moves window (asynchronously?)
+     //Hide(); -> avoids old position flash before Center() on GNOME but causes hang on KDE? https://freefilesync.org/forum/viewtopic.php?t=10103#p42404
  #endif
 --- a/FreeFileSync/Source/ui/small_dlgs.cpp
 +++ b/FreeFileSync/Source/ui/small_dlgs.cpp
@@ -50,7 +50,7 @@ Fix for hang described here: https://freefilesync.org/forum/viewtopic.php?t=1010
 -#ifdef __WXGTK3__
 +#if 0 // __WXGTK3__
      Show(); //GTK3 size calculation requires visible window: https://github.com/wxWidgets/wxWidgets/issues/16088
-     Hide(); //avoid old position flash when Center() moves window (asynchronously?)
+     //Hide(); -> avoids old position flash before Center() on GNOME but causes hang on KDE? https://freefilesync.org/forum/viewtopic.php?t=10103#p42404
  #endif
 @@ -164,7 +160,7 @@
      Bind(wxEVT_CHAR_HOOK, [this](wxKeyEvent& event) { onLocalKeyEvent(event); }); //enable dialog-specific key events
@@ -59,7 +59,7 @@ Fix for hang described here: https://freefilesync.org/forum/viewtopic.php?t=1010
 -#ifdef __WXGTK3__
 +#if 0 // __WXGTK3__
      Show(); //GTK3 size calculation requires visible window: https://github.com/wxWidgets/wxWidgets/issues/16088
-     Hide(); //avoid old position flash when Center() moves window (asynchronously?)
+     //Hide(); -> avoids old position flash before Center() on GNOME but causes hang on KDE? https://freefilesync.org/forum/viewtopic.php?t=10103#p42404
  #endif
 @@ -401,7 +394,7 @@
  
@@ -68,7 +68,7 @@ Fix for hang described here: https://freefilesync.org/forum/viewtopic.php?t=1010
 -#ifdef __WXGTK3__
 +#if 0 // __WXGTK3__
      Show(); //GTK3 size calculation requires visible window: https://github.com/wxWidgets/wxWidgets/issues/16088
-     Hide(); //avoid old position flash when Center() moves window (asynchronously?)
+     //Hide(); -> avoids old position flash before Center() on GNOME but causes hang on KDE? https://freefilesync.org/forum/viewtopic.php?t=10103#p42404
  #endif
 @@ -973,7 +962,7 @@
      Bind(wxEVT_CHAR_HOOK, [this](wxKeyEvent& event) { onLocalKeyEvent(event); }); //enable dialog-specific key events
@@ -77,7 +77,7 @@ Fix for hang described here: https://freefilesync.org/forum/viewtopic.php?t=1010
 -#ifdef __WXGTK3__
 +#if 0 // __WXGTK3__
      Show(); //GTK3 size calculation requires visible window: https://github.com/wxWidgets/wxWidgets/issues/16088
-     Hide(); //avoid old position flash when Center() moves window (asynchronously?)
+     //Hide(); -> avoids old position flash before Center() on GNOME but causes hang on KDE? https://freefilesync.org/forum/viewtopic.php?t=10103#p42404
  #endif
 @@ -1091,7 +1077,7 @@
      Bind(wxEVT_CHAR_HOOK, [this](wxKeyEvent& event) { onLocalKeyEvent(event); }); //enable dialog-specific key events
@@ -86,7 +86,7 @@ Fix for hang described here: https://freefilesync.org/forum/viewtopic.php?t=1010
 -#ifdef __WXGTK3__
 +#if 0 // __WXGTK3__
      Show(); //GTK3 size calculation requires visible window: https://github.com/wxWidgets/wxWidgets/issues/16088
-     Hide(); //avoid old position flash when Center() moves window (asynchronously?)
+     //Hide(); -> avoids old position flash before Center() on GNOME but causes hang on KDE? https://freefilesync.org/forum/viewtopic.php?t=10103#p42404
  #endif
 @@ -1234,7 +1217,7 @@
      setIntValue(*m_staticTextDeleteRight, st.deleteCount<SelectSide::right>(), *m_bitmapDeleteRight, "so_delete_right_sicon");
@@ -95,7 +95,7 @@ Fix for hang described here: https://freefilesync.org/forum/viewtopic.php?t=1010
 -#ifdef __WXGTK3__
 +#if 0 // __WXGTK3__
      Show(); //GTK3 size calculation requires visible window: https://github.com/wxWidgets/wxWidgets/issues/16088
-     Hide(); //avoid old position flash when Center() moves window (asynchronously?)
+     //Hide(); -> avoids old position flash before Center() on GNOME but causes hang on KDE? https://freefilesync.org/forum/viewtopic.php?t=10103#p42404
  #endif
 @@ -1501,7+1481,7 @@
      updateGui();
@@ -104,7 +104,7 @@ Fix for hang described here: https://freefilesync.org/forum/viewtopic.php?t=1010
 -#ifdef __WXGTK3__
 +#if 0 // __WXGTK3__
      Show(); //GTK3 size calculation requires visible window: https://github.com/wxWidgets/wxWidgets/issues/16088
-     Hide(); //avoid old position flash when Center() moves window (asynchronously?)
+     //Hide(); -> avoids old position flash before Center() on GNOME but causes hang on KDE? https://freefilesync.org/forum/viewtopic.php?t=10103#p42404
  #endif
 @@ -1824,7 +1801,7 @@
      Bind(wxEVT_CHAR_HOOK, [this](wxKeyEvent& event) { onLocalKeyEvent(event); }); //enable dialog-specific key events
@@ -113,7 +113,7 @@ Fix for hang described here: https://freefilesync.org/forum/viewtopic.php?t=1010
 -#ifdef __WXGTK3__
 +#if 0 // __WXGTK3__
      Show(); //GTK3 size calculation requires visible window: https://github.com/wxWidgets/wxWidgets/issues/16088
-     Hide(); //avoid old position flash when Center() moves window (asynchronously?)
+     //Hide(); -> avoids old position flash before Center() on GNOME but causes hang on KDE? https://freefilesync.org/forum/viewtopic.php?t=10103#p42404
  #endif
 @@ -1923,7 +1897,7 @@
      m_textCtrlPasswordVisible->Hide();
@@ -122,7 +122,7 @@ Fix for hang described here: https://freefilesync.org/forum/viewtopic.php?t=1010
 -#ifdef __WXGTK3__
 +#if 0 // __WXGTK3__
      Show(); //GTK3 size calculation requires visible window: https://github.com/wxWidgets/wxWidgets/issues/16088
-     Hide(); //avoid old position flash when Center() moves window (asynchronously?)
+     //Hide(); -> avoids old position flash before Center() on GNOME but causes hang on KDE? https://freefilesync.org/forum/viewtopic.php?t=10103#p42404
  #endif
 @@ -2009,7 +1980,7 @@
      m_spinCtrlOverdueDays->SetValue(cfgHistSyncOverdueDays);
@@ -131,7 +131,7 @@ Fix for hang described here: https://freefilesync.org/forum/viewtopic.php?t=1010
 -#ifdef __WXGTK3__
 +#if 0 // __WXGTK3__
      Show(); //GTK3 size calculation requires visible window: https://github.com/wxWidgets/wxWidgets/issues/16088
-     Hide(); //avoid old position flash when Center() moves window (asynchronously?)
+     //Hide(); -> avoids old position flash before Center() on GNOME but causes hang on KDE? https://freefilesync.org/forum/viewtopic.php?t=10103#p42404
  #endif
 @@ -2078,7 +2046,7 @@
      m_textCtrlOfflineActivationKey->ChangeValue(manualActivationKey);
@@ -140,7 +140,7 @@ Fix for hang described here: https://freefilesync.org/forum/viewtopic.php?t=1010
 -#ifdef __WXGTK3__
 +#if 0 // __WXGTK3__
      Show(); //GTK3 size calculation requires visible window: https://github.com/wxWidgets/wxWidgets/issues/16088
-     Hide(); //avoid old position flash when Center() moves window (asynchronously?)
+     //Hide(); -> avoids old position flash before Center() on GNOME but causes hang on KDE? https://freefilesync.org/forum/viewtopic.php?t=10103#p42404
  #endif
 @@ -2186,7 +2151,7 @@
      updateGui();
@@ -149,7 +149,7 @@ Fix for hang described here: https://freefilesync.org/forum/viewtopic.php?t=1010
 -#ifdef __WXGTK3__
 +#if 0 // __WXGTK3__
      Show(); //GTK3 size calculation requires visible window: https://github.com/wxWidgets/wxWidgets/issues/16088
-     Hide(); //avoid old position flash when Center() moves window (asynchronously?)
+     //Hide(); -> avoids old position flash before Center() on GNOME but causes hang on KDE? https://freefilesync.org/forum/viewtopic.php?t=10103#p42404
  #endif
 --- a/FreeFileSync/Source/ui/sync_cfg.cpp
 +++ b/FreeFileSync/Source/ui/sync_cfg.cpp
@@ -160,7 +160,7 @@ Fix for hang described here: https://freefilesync.org/forum/viewtopic.php?t=1010
 -#ifdef __WXGTK3__
 +#if 0 // __WXGTK3__
      Show(); //GTK3 size calculation requires visible window: https://github.com/wxWidgets/wxWidgets/issues/16088
-     Hide(); //avoid old position flash when Center() moves window (asynchronously?)
+     //Hide(); -> avoids old position flash before Center() on GNOME but causes hang on KDE? https://freefilesync.org/forum/viewtopic.php?t=10103#p42404
  #endif
 --- a/wx+/popup_dlg.cpp
 +++ b/wx+/popup_dlg.cpp
@@ -171,5 +171,5 @@ Fix for hang described here: https://freefilesync.org/forum/viewtopic.php?t=1010
 -#ifdef __WXGTK3__
 +#if 0 // __WXGTK3__
          Show(); //GTK3 size calculation requires visible window: https://github.com/wxWidgets/wxWidgets/issues/16088
-         Hide(); //avoid old position flash when Center() moves window (asynchronously?)
+         //Hide(); -> avoids old position flash before Center() on GNOME but causes hang on KDE? https://freefilesync.org/forum/viewtopic.php?t=10103#p42404
  #endif
