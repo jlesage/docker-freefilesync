@@ -613,7 +613,7 @@ done, it has to be saved as a "batch Job", under `/config` inside the container.
 The name of the file, without the `.ffs_batch` extension, must match the name of
 the job set via the environment variable.
 
-For example, if `FFS_SCHEDULED_JOB_1_NAME` is set to `MyBackup1`, the
+For example, if `FFS_SCHEDULED_BATCH_JOB_1_NAME` is set to `MyBackup1`, the
 FreeFileSync synchronization configuration should be saved to
 `/config/MyBackup1.ffs_batch`.
 
