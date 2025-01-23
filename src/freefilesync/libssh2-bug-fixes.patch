@@ -1,0 +1,57 @@
+#
+# Implement changes documented in FreeFileSync_14.0/Bugs.txt.
+#
+--- a/src/sftp.h	2025-01-21 21:13:47.061675579 -0500
++++ b/src/sftp.h	2025-01-21 21:16:02.207769299 -0500
+@@ -40,17 +40,6 @@
+  * SPDX-License-Identifier: BSD-3-Clause
+  */
+ 
+-/*
+- * MAX_SFTP_OUTGOING_SIZE MUST not be larger than 32500 or so. This is the
+- * amount of data sent in each FXP_WRITE packet
+- */
+-#define MAX_SFTP_OUTGOING_SIZE 30000
+-
+-/* MAX_SFTP_READ_SIZE is how much data is asked for at max in each FXP_READ
+- * packets.
+- */
+-#define MAX_SFTP_READ_SIZE 30000
+-
+ struct sftp_pipeline_chunk {
+     struct list_node node;
+     libssh2_uint64_t offset; /* READ: offset at which to start reading
+--- a/include/libssh2_sftp.h	2025-01-21 21:15:43.956756538 -0500
++++ b/include/libssh2_sftp.h	2025-01-21 21:14:33.365707483 -0500
+@@ -50,6 +50,17 @@
+ extern "C" {
+ #endif
+ 
++/*
++ * MAX_SFTP_OUTGOING_SIZE MUST not be larger than 32500 or so. This is the
++ * amount of data sent in each FXP_WRITE packet
++ */
++#define MAX_SFTP_OUTGOING_SIZE 30000
++
++/* MAX_SFTP_READ_SIZE is how much data is asked for at max in each FXP_READ
++ * packets.
++ */
++#define MAX_SFTP_READ_SIZE 30000
++
+ /* Note: Version 6 was documented at the time of writing
+  * However it was marked as "DO NOT IMPLEMENT" due to pending changes
+  *
+--- a/src/session.c	2025-01-21 21:12:11.888610796 -0500
++++ b/src/session.c	2025-01-21 21:13:13.460652580 -0500
+@@ -949,7 +949,11 @@
+                               &session->startup_key_state.key_state_low);
+     }
+ 
++#if 0 // Fix memory leak.
+     if(session->state & LIBSSH2_STATE_NEWKEYS) {
++#else
++    {
++#endif
+         /* hostkey */
+         if(session->hostkey && session->hostkey->dtor) {
+             session->hostkey->dtor(session, &session->server_hostkey_abstract);

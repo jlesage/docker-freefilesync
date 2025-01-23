@@ -30,10 +30,11 @@ function log {
 FREEFILESYNC_URL="${1:-}"
 WXWIDGETS_URL="${2:-}"
 LIBSSH2_URL="${3:-}"
-GOOGLE_CLIENT_ID_K1="${4:-}"
-GOOGLE_CLIENT_ID_K2="${5:-}"
-GOOGLE_CLIENT_SECRET_K1="${6:-}"
-GOOGLE_CLIENT_SECRET_K2="${7:-}"
+CURL_URL="${4:-}"
+GOOGLE_CLIENT_ID_K1="${5:-}"
+GOOGLE_CLIENT_ID_K2="${6:-}"
+GOOGLE_CLIENT_SECRET_K1="${7:-}"
+GOOGLE_CLIENT_SECRET_K2="${8:-}"
 
 if [ -z "$FREEFILESYNC_URL" ]; then
     log "ERROR: FreeFileSync URL missing."
@@ -50,11 +51,17 @@ if [ -z "$LIBSSH2_URL" ]; then
     exit 1
 fi
 
+if [ -z "$CURL_URL" ]; then
+    log "ERROR: curl URL missing."
+    exit 1
+fi
+
 #
 # Install required packages.
 #
 apk --no-cache add \
     curl \
+    git \
     patch \
     make \
     pkgconf \
@@ -72,10 +79,16 @@ fi
 
 xx-apk --no-cache --no-scripts add \
     openssl-dev \
-    curl-dev \
     gtk+3.0-dev \
     libsm-dev \
     zlib-dev \
+    brotli-dev \
+    c-ares-dev \
+    libidn2-dev \
+    libpsl-dev \
+    nghttp2-dev \
+    openssl-dev \
+    zstd-dev \
 
 #
 # Download sources.
@@ -93,6 +106,7 @@ do
     fi
 
     # Try again
+    TRIES="$(expr "$TRIES" - 1)"
     echo "Failed to download FreeFileSync, retrying..."
     rm -f /tmp/freefilesync.zip
     sleep 5
@@ -104,16 +118,35 @@ fi
 unzip -d /tmp/freefilesync /tmp/freefilesync.zip
 
 log "Download wxWidgets package..."
-mkdir /tmp/wxwidgets
-curl -# -L -f "${WXWIDGETS_URL}" | tar xj --strip 1 -C /tmp/wxwidgets
+if [ -n "${WXWIDGETS_URL##*@}" ]; then
+    git clone "${WXWIDGETS_URL%%@*}" /tmp/wxwidgets
+    git -C /tmp/wxwidgets reset --hard "${WXWIDGETS_URL##*@}"
+    git -C /tmp/wxwidgets submodule update --init
+else
+    mkdir /tmp/wxwidgets
+    curl -# -L -f "${WXWIDGETS_URL}" | tar xz --strip 1 -C /tmp/wxwidgets
+fi
 
 log "Download libssh2 package..."
 mkdir /tmp/libssh2
 curl -# -L -f "${LIBSSH2_URL}" | tar xz --strip 1 -C /tmp/libssh2
 
+log "Download curl package..."
+mkdir /tmp/curl
+curl -# -L -f "${CURL_URL}" | tar xJ --strip 1 -C /tmp/curl
+
 #
 # Compile wxWidgets.
 #
+
+log "Patching libssh2..."
+PATCHES="
+    wxwidgets-bug-fixes.patch
+"
+for PATCH in $PATCHES; do
+    log "Applying $PATCH..."
+    patch -p1 -d /tmp/wxwidgets < "$SCRIPT_DIR"/"$PATCH"
+done
 
 log "Configuring wxWidgets..."
 (
@@ -122,7 +155,6 @@ log "Configuring wxWidgets..."
         --host=$(xx-info) \
         --prefix=$(xx-info sysroot)usr \
         --disable-shared \
-        --enable-unicode \
         --disable-xlocale \
         --disable-exceptions \
         --with-gtk=3 \
@@ -141,6 +173,15 @@ fi
 # Compile libssh2.
 #
 
+log "Patching libssh2..."
+PATCHES="
+    libssh2-bug-fixes.patch
+"
+for PATCH in $PATCHES; do
+    log "Applying $PATCH..."
+    patch -p1 -d /tmp/libssh2 < "$SCRIPT_DIR"/"$PATCH"
+done
+
 log "Configuring libssh2..."
 (
     cd /tmp/libssh2 && ./configure \
@@ -158,16 +199,52 @@ log "Installing libssh2..."
 make -C /tmp/libssh2 install
 
 #
+# Compile curl.
+#
+
+log "Patching curl..."
+PATCHES="
+    curl-bug-fixes.patch
+"
+for PATCH in $PATCHES; do
+    log "Applying $PATCH..."
+    patch -p1 -d /tmp/curl < "$SCRIPT_DIR"/"$PATCH"
+done
+
+log "Configuring curl..."
+(
+    cd /tmp/curl && ./configure \
+        --build=$(TARGETPLATFORM= xx-info) \
+        --host=$(xx-info) \
+        --prefix=$(xx-info sysroot)usr \
+        --disable-docs \
+        --disable-shared \
+        --enable-static \
+        --enable-ares \
+        --enable-ipv6 \
+        --enable-unix-sockets \
+        --with-libidn2 \
+        --with-nghttp2 \
+        --with-openssl \
+        --with-ca-bundle=/etc/ssl/cert.pem \
+        --disable-ldap \
+        --with-pic \
+        --enable-websockets \
+        --without-libssh2 \
+)
+
+log "Compiling curl..."
+make -C /tmp/curl -j$(nproc)
+
+log "Installing curl..."
+make -C /tmp/curl install
+
+#
 # Compile FreeFileSync.
 #
 
-export CFLAGS="$CFLAGS -DMAX_SFTP_READ_SIZE=30000 -DMAX_SFTP_OUTGOING_SIZE=30000"
-export CXXFLAGS="$CFLAGS"
-export CPPFLAGS="$CFLAGS"
-
 log "Patching FreeFileSync..."
 PATCHES="
-    libcurl_improve_supported_error_codes.patch
     compilation-fix.patch
     client-credentials.patch
     default-deletion-policy.patch

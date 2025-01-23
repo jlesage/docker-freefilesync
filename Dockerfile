@@ -8,14 +8,17 @@
 ARG DOCKER_IMAGE_VERSION=
 
 # Define software versions.
-ARG FREEFILESYNC_VERSION=13.9
-ARG WXWIDGETS_VERSION=3.2.4
-ARG LIBSSH2_VERSION=1.11.0
+ARG FREEFILESYNC_VERSION=14.0
+ARG WXWIDGETS_VERSION=cd9acf6
+ARG LIBSSH2_VERSION=1.11.1
+ARG CURL_VERSION=8.11.1
 
 # Define software download URLs.
 ARG FREEFILESYNC_URL=https://freefilesync.org/download/FreeFileSync_${FREEFILESYNC_VERSION}_Source.zip
-ARG WXWIDGETS_URL=https://github.com/wxWidgets/wxWidgets/releases/download/v${WXWIDGETS_VERSION}/wxWidgets-${WXWIDGETS_VERSION}.tar.bz2
+#ARG WXWIDGETS_URL=https://github.com/wxWidgets/wxWidgets/releases/download/v${WXWIDGETS_VERSION}/wxWidgets-${WXWIDGETS_VERSION}.tar.bz2
+ARG WXWIDGETS_URL=https://github.com/wxWidgets/wxWidgets.git@${WXWIDGETS_VERSION}
 ARG LIBSSH2_URL=http://www.libssh2.org/download/libssh2-${LIBSSH2_VERSION}.tar.gz
+ARG CURL_URL=https://curl.se/download/curl-${CURL_VERSION}.tar.xz
 
 # Google API client ID and secret to enable Sign-in with Google.
 ARG GOOGLE_CLIENT_ID_K1=
@@ -32,6 +35,7 @@ ARG TARGETPLATFORM
 ARG FREEFILESYNC_URL
 ARG WXWIDGETS_URL
 ARG LIBSSH2_URL
+ARG CURL_URL
 ARG GOOGLE_CLIENT_ID_K1
 ARG GOOGLE_CLIENT_ID_K2
 ARG GOOGLE_CLIENT_SECRET_K1
@@ -42,6 +46,7 @@ RUN /build/build.sh \
     "$FREEFILESYNC_URL" \
     "$WXWIDGETS_URL" \
     "$LIBSSH2_URL" \
+    "$CURL_URL" \
     "$GOOGLE_CLIENT_ID_K1" \
     "$GOOGLE_CLIENT_ID_K2" \
     "$GOOGLE_CLIENT_SECRET_K1" \
@@ -62,7 +67,9 @@ WORKDIR /tmp
 RUN \
     add-pkg \
         gtk+3.0 \
-        libcurl \
+        libpsl \
+        c-ares \
+        nghttp2-libs \
         libsm \
         libxxf86vm \
         librsvg \

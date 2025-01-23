@@ -1,0 +1,186 @@
+#
+# Implement changes documented in FreeFileSync_14.0/Bugs.txt.
+#
+diff --git a/include/wx/features.h b/include/wx/features.h
+index 344d1a33f8..7fcfc3db5a 100644
+--- a/include/wx/features.h
++++ b/include/wx/features.h
+@@ -118,6 +118,9 @@
+     // This is an older synonym kept only for compatibility
+     #define wxHAVE_DPI_INDEPENDENT_PIXELS
+ #endif
++#if defined(__WXGTK20__)
++    #define wxHAS_DPI_INDEPENDENT_PIXELS
++#endif
+ 
+ #endif /*  _WX_FEATURES_H_ */
+ 
+diff --git a/include/wx/settings.h b/include/wx/settings.h
+index 3967b98b46..c55ff6c7a3 100644
+--- a/include/wx/settings.h
++++ b/include/wx/settings.h
+@@ -10,6 +10,8 @@
+ #ifndef _WX_SETTINGS_H_BASE_
+ #define _WX_SETTINGS_H_BASE_
+ 
++#include <memory>
++
+ #include "wx/colour.h"
+ #include "wx/font.h"
+ 
+@@ -241,9 +243,27 @@ public:
+ // include the declaration of the real platform-dependent class
+ // ----------------------------------------------------------------------------
+ 
++struct wxColorHook
++{
++    virtual ~wxColorHook() {}
++    virtual wxColor getColor(wxSystemColour index) const = 0;
++};
++WXDLLIMPEXP_CORE inline std::unique_ptr<wxColorHook>& refGlobalColorHook()
++{
++    static std::unique_ptr<wxColorHook> globalColorHook;
++    return globalColorHook;
++}
++
+ class WXDLLIMPEXP_CORE wxSystemSettings : public wxSystemSettingsNative
+ {
+ public:
++    static wxColour GetColour(wxSystemColour index)
++    {
++        if (refGlobalColorHook())
++            return refGlobalColorHook()->getColor(index);
++
++        return wxSystemSettingsNative::GetColour(index);
++    }
+ #ifdef __WXUNIVERSAL__
+     // in wxUniversal we want to use the theme standard colours instead of the
+     // system ones, otherwise wxSystemSettings is just the same as
+diff --git a/src/aui/framemanager.cpp b/src/aui/framemanager.cpp
+index 193c981de5..bd6ca40256 100644
+--- a/src/aui/framemanager.cpp
++++ b/src/aui/framemanager.cpp
+@@ -2165,36 +2165,22 @@ wxSizer* wxAuiManager::LayoutAll(wxAuiPaneInfoArray& panes,
+ 
+ 
+         // determine the dock's minimum size
+-        bool plus_border = false;
+-        bool plus_caption = false;
+         int dock_min_size = 0;
+-        for ( const auto* p : dock.panes )
++        for (j = 0; j < dock_pane_count; ++j)
+         {
+-            const wxAuiPaneInfo& pane = *p;
++            wxAuiPaneInfo& pane = *dock.panes.Item(j);
+             if (pane.min_size != wxDefaultSize)
+             {
++                int paneSize = dock.IsHorizontal() ? pane.min_size.y : pane.min_size.x;
+                 if (pane.HasBorder())
+-                    plus_border = true;
+-                if (pane.HasCaption())
+-                    plus_caption = true;
+-                if (dock.IsHorizontal())
+-                {
+-                    if (pane.min_size.y > dock_min_size)
+-                        dock_min_size = pane.min_size.y;
+-                }
+-                else
+-                {
+-                    if (pane.min_size.x > dock_min_size)
+-                        dock_min_size = pane.min_size.x;
+-                }
++                    paneSize += 2 * pane_borderSize;
++                if (pane.HasCaption() && dock.IsHorizontal())
++                    paneSize += caption_size;
++                if (paneSize > dock_min_size)
++                    dock_min_size = paneSize;
+             }
+         }
+ 
+-        if (plus_border)
+-            dock_min_size += (pane_borderSize*2);
+-        if (plus_caption && dock.IsHorizontal())
+-            dock_min_size += (caption_size);
+-
+         dock.min_size = dock_min_size;
+ 
+ 
+diff --git a/src/gtk/button.cpp b/src/gtk/button.cpp
+index 846f257737..8ad6bb20cd 100644
+--- a/src/gtk/button.cpp
++++ b/src/gtk/button.cpp
+@@ -248,21 +248,6 @@ void wxButton::SetLabel( const wxString &lbl )
+     if ( HasFlag(wxBU_NOTEXT) )
+         return;
+ 
+-#ifndef __WXGTK4__
+-    wxGCC_WARNING_SUPPRESS(deprecated-declarations)
+-    if (wxIsStockID(m_windowId) && wxIsStockLabel(m_windowId, label))
+-    {
+-        const char *stock = wxGetStockGtkID(m_windowId);
+-        if (stock)
+-        {
+-            gtk_button_set_label(GTK_BUTTON(m_widget), stock);
+-            gtk_button_set_use_stock(GTK_BUTTON(m_widget), TRUE);
+-            return;
+-        }
+-    }
+-    wxGCC_WARNING_RESTORE()
+-#endif
+-
+     // this call is necessary if the button had been initially created without
+     // a (text) label -- then we didn't use gtk_button_new_with_mnemonic() and
+     // so "use-underline" GtkButton property remained unset
+diff --git a/src/gtk/menu.cpp b/src/gtk/menu.cpp
+index 8bf82dd2bb..4df85e159c 100644
+--- a/src/gtk/menu.cpp
++++ b/src/gtk/menu.cpp
+@@ -874,7 +874,7 @@ void wxMenu::Init()
+     }
+ 
+     // "show" occurs for sub-menus which are not showing, so use "map" instead
+-    g_signal_connect(m_menu, "map", G_CALLBACK(menu_map), this);
++    g_signal_connect(m_menu, "show", G_CALLBACK(menu_map), this); //"map" is never called on Ubuntu Unity, but "show" is
+     g_signal_connect(m_menu, "hide", G_CALLBACK(menu_hide), this);
+ }
+ 
+diff --git a/src/gtk/window.cpp b/src/gtk/window.cpp
+index 93c89f642b..1c75e9f00b 100644
+--- a/src/gtk/window.cpp
++++ b/src/gtk/window.cpp
+@@ -4197,22 +4197,6 @@ bool wxWindowGTK::EnableTouchEvents(int eventsMask)
+ 
+ void wxWindowGTK::ConnectWidget( GtkWidget *widget )
+ {
+-    static bool isSourceAttached;
+-    if (!isSourceAttached)
+-    {
+-        // attach GSource to detect new GDK events
+-        isSourceAttached = true;
+-        static GSourceFuncs funcs = {
+-            source_prepare, source_check, source_dispatch,
+-            nullptr, nullptr, nullptr
+-        };
+-        GSource* source = g_source_new(&funcs, sizeof(GSource));
+-        // priority slightly higher than GDK_PRIORITY_EVENTS
+-        g_source_set_priority(source, GDK_PRIORITY_EVENTS - 1);
+-        g_source_attach(source, nullptr);
+-        g_source_unref(source);
+-    }
+-
+     // When we're called for the main widget itself (but not when connecting
+     // events for some other widget, such as individual radio buttons in
+     // wxRadioBox::Create()), connect to m_focusWidget for the keyboard events
+diff --git a/src/unix/sound.cpp b/src/unix/sound.cpp
+index ecd8060bd8..18bfd60908 100644
+--- a/src/unix/sound.cpp
++++ b/src/unix/sound.cpp
+@@ -728,7 +728,7 @@ bool wxSound::LoadWAV(const void* data_, size_t length, bool copyData)
+     else
+         m_data->m_dataWithHeader = const_cast<wxUint8*>(data);
+ 
+-    m_data->m_data = (&m_data->m_dataWithHeader[data_offset]);
++    m_data->m_data = (&m_data->m_dataWithHeader[data_offset + 8]);
+ 
+     return true;
+ }

@@ -23,19 +23,6 @@
      return FileIconHolder(gicon, maxSize); //
  
  }
---- a/wx+/dc.h
-+++ b/wx+/dc.h
-@@ -91,8 +91,10 @@
- inline
- int getDPI()
- {
-+#if 1
- #ifndef wxHAS_DPI_INDEPENDENT_PIXELS
- #error why is wxHAS_DPI_INDEPENDENT_PIXELS not defined?
-+#endif
- #endif
-     //GTK2 doesn't properly support high DPI: https://freefilesync.org/forum/viewtopic.php?t=6114
-     //=> requires general fix at wxWidgets-level
 --- a/zen/format_unit.cpp
 +++ b/zen/format_unit.cpp
 @@ -186,7 +186,11 @@
