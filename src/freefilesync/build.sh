@@ -254,6 +254,7 @@ PATCHES="
     fix-hang.patch
     disable-getentropy.patch
     disable-minimize-to-tray.patch
+    disable-color-theme.patch
 "
 for PATCH in $PATCHES; do
     log "Applying $PATCH..."
