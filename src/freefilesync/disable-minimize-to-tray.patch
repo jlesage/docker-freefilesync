@@ -37,14 +37,14 @@
  		wxStaticText* m_staticTextStatus;
  		wxPanel* m_panelProgress;
 @@ -951,7 +957,9 @@
- 		wxPanel* m_panel35;
- 		wxStaticText* m_staticText146;
- 		wxFlexGridSizer* ffgSizer11;
+ 	protected:
+ 		wxStaticBitmap* m_bitmapBatchJob;
+ 		wxStaticText* m_staticTextHeader;
 +#if 0
  		wxStaticBitmap* m_bitmapMinimizeToTray;
 +#endif
  		wxCheckBox* m_checkBoxRunMinimized;
- 		wxStaticLine* m_staticline26;
+ 		wxCheckBox* m_checkBoxAutoClose;
  		wxStaticBitmap* m_bitmapIgnoreErrors;
 --- a/FreeFileSync/Source/ui/progress_indicator.cpp	2023-10-02 17:07:53.344092747 -0400
 +++ b/FreeFileSync/Source/ui/progress_indicator.cpp	2023-10-02 17:10:33.512515516 -0400
