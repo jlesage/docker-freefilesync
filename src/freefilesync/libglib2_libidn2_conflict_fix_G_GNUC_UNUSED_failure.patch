@@ -1,0 +1,62 @@
+From: Fab Stz <fabstz-it@yahoo.fr>
+Date: Fri, 28 Mar 2025 20:28:42 +0100
+Subject: Fix build failure: 'G_GNUC_UNUSED' does not name a type
+
+Origin: self
+Bug: https://freefilesync.org/forum/viewtopic.php?t=12163
+Last-Update: 2025-03-28
+
+Build fails with:
+
+In file included from /usr/lib/x86_64-linux-gnu/glib-2.0/include/glibconfig.h:9,
+                 from /usr/include/glib-2.0/glib/gtypes.h:34,
+                 from /usr/include/glib-2.0/glib/galloca.h:34,
+                 from /usr/include/glib-2.0/glib.h:32,
+                 from ../../zen/sys_error.h:15:
+/usr/include/glib-2.0/glib/gmacros.h:1360:10: error: 'G_GNUC_UNUSED' does not name a type; did you mean 'G_GNUC_PURE'?
+ 1360 |   static G_GNUC_UNUSED inline void _GLIB_AUTOPTR_CLEAR_FUNC_NAME(TypeName) (TypeName *_ptr)                     \
+      |          ^~~~~~~~~~~~~
+/usr/include/glib-2.0/glib/gmacros.h:1379:3: note: in expansion of macro '_GLIB_DEFINE_AUTOPTR_CLEANUP_FUNCS'
+ 1379 |   _GLIB_DEFINE_AUTOPTR_CLEANUP_FUNCS(TypeName, TypeName, func)
+      |   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/usr/include/glib-2.0/gobject/gtypemodule.h:41:1: note: in expansion of macro 'G_DEFINE_AUTOPTR_CLEANUP_FUNC'
+   41 | G_DEFINE_AUTOPTR_CLEANUP_FUNC(GTypeModule, g_object_unref)
+      | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+According to upstream, there is a conflict on G_GNUC_UNUSED when including both
+glib.h & idn2.h. However, I haven't found any conflict on linux with
+ - libidn2 2.3.7 and glib 2.80.0
+ - libidn2 2.3.8 and glib 2.84.0
+
+Required since 14.3
+---
+ zen/socket.h    | 2 +-
+ zen/sys_error.h | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/zen/socket.h b/zen/socket.h
+index 7013f8b..b40fe64 100644
+--- a/zen/socket.h
++++ b/zen/socket.h
+@@ -9,7 +9,7 @@
+ 
+ #include "sys_error.h"
+     #include <idn2.h>
+-    #undef G_GNUC_UNUSED //defined in idn2.h: clashes with glib.h
++    //#undef G_GNUC_UNUSED //defined in idn2.h: clashes with glib.h
+     #include <unistd.h> //close
+     #include <sys/socket.h>
+     #include <netinet/tcp.h> //TCP_NODELAY
+diff --git a/zen/sys_error.h b/zen/sys_error.h
+index 9c35891..92071c0 100644
+--- a/zen/sys_error.h
++++ b/zen/sys_error.h
+@@ -13,7 +13,7 @@
+ #include "extra_log.h"   //
+ 
+     #include <glib.h>
+-    #undef G_GNUC_UNUSED //defined in glib.h: clashes with idn2.h
++    //#undef G_GNUC_UNUSED //defined in glib.h: clashes with idn2.h
+     #include <cerrno>
+ 
+ 

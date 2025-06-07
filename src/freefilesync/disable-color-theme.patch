@@ -3,56 +3,56 @@
 #
 --- a/FreeFileSync/Source/ui/gui_generated.cpp	2025-01-20 20:15:00.290738310 -0500
 +++ b/FreeFileSync/Source/ui/gui_generated.cpp	2025-01-22 19:46:22.820913326 -0500
-@@ -4939,6 +4939,7 @@
- 	m_staticline39 = new wxStaticLine( m_panel39, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_VERTICAL );
- 	bSizer186->Add( m_staticline39, 0, wxEXPAND, 5 );
+@@ -4939,6 +4947,7 @@
+     m_staticline39 = new wxStaticLine( m_panel39, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_VERTICAL );
+     bSizer186->Add( m_staticline39, 0, wxEXPAND, 5 );
  
 +#if 0
- 	bSizerColorTheme = new wxBoxSizer( wxHORIZONTAL );
+     bSizerColorTheme = new wxBoxSizer( wxHORIZONTAL );
  
- 	m_bitmapColorTheme = new wxStaticBitmap( m_panel39, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, 0 );
-@@ -4962,6 +4963,7 @@
+     m_bitmapColorTheme = new wxStaticBitmap( m_panel39, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, 0 );
+@@ -4962,6 +4971,7 @@
  
  
- 	bSizer186->Add( bSizerColorTheme, 0, wxEXPAND|wxALL, 5 );
+     bSizer186->Add( bSizerColorTheme, 0, wxEXPAND|wxALL, 5 );
 +#endif
  
  
- 	bSizer166->Add( bSizer186, 0, wxEXPAND, 5 );
-@@ -5416,7 +5418,9 @@
+     bSizer166->Add( bSizer186, 0, wxEXPAND, 5 );
+@@ -5416,7 +5426,9 @@
  
- 	// Connect Events
- 	this->Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( OptionsDlgGenerated::onClose ) );
+     // Connect Events
+     this->Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( OptionsDlgGenerated::onClose ) );
 +#if 0
- 	m_choiceColorTheme->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( OptionsDlgGenerated::onChangeColorTheme ), NULL, this );
+     m_choiceColorTheme->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( OptionsDlgGenerated::onChangeColorTheme ), NULL, this );
 +#endif
- 	m_buttonShowHiddenDialogs->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( OptionsDlgGenerated::onShowHiddenDialogs ), NULL, this );
- 	m_checkListHiddenDialogs->Connect( wxEVT_COMMAND_CHECKLISTBOX_TOGGLED, wxCommandEventHandler( OptionsDlgGenerated::onToggleHiddenDialog ), NULL, this );
- 	m_bpButtonShowLogFolder->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( OptionsDlgGenerated::onShowLogFolder ), NULL, this );
+     m_buttonShowHiddenDialogs->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( OptionsDlgGenerated::onShowHiddenDialogs ), NULL, this );
+     m_checkListHiddenDialogs->Connect( wxEVT_COMMAND_CHECKLISTBOX_TOGGLED, wxCommandEventHandler( OptionsDlgGenerated::onToggleHiddenDialog ), NULL, this );
+     m_bpButtonShowLogFolder->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( OptionsDlgGenerated::onShowLogFolder ), NULL, this );
 --- a/FreeFileSync/Source/ui/gui_generated.h	2025-01-20 20:15:12.549758207 -0500
 +++ b/FreeFileSync/Source/ui/gui_generated.h	2025-01-22 19:48:12.706040513 -0500
-@@ -962,9 +962,11 @@
- 		wxBoxSizer* bSizerLockedFiles;
- 		wxCheckBox* m_checkBoxCopyLocked;
- 		wxCheckBox* m_checkBoxCopyPermissions;
+@@ -962,9 +970,11 @@
+     wxBoxSizer* bSizerLockedFiles;
+     wxCheckBox* m_checkBoxCopyLocked;
+     wxCheckBox* m_checkBoxCopyPermissions;
 +#if 0
- 		wxBoxSizer* bSizerColorTheme;
- 		wxStaticBitmap* m_bitmapColorTheme;
- 		wxChoice* m_choiceColorTheme;
+     wxBoxSizer* bSizerColorTheme;
+     wxStaticBitmap* m_bitmapColorTheme;
+     wxChoice* m_choiceColorTheme;
 +#endif
- 		wxStaticBitmap* m_bitmapWarnings;
- 		wxStaticText* m_staticTextHiddenDialogsCount;
- 		wxButton* m_buttonShowHiddenDialogs;
-@@ -1005,7 +1007,9 @@
+     wxStaticBitmap* m_bitmapWarnings;
+     wxStaticText* m_staticTextHiddenDialogsCount;
+     wxButton* m_buttonShowHiddenDialogs;
+@@ -1005,7 +1015,9 @@
  
- 		// Virtual event handlers, override them in your derived class
- 		virtual void onClose( wxCloseEvent& event ) { event.Skip(); }
+     // Virtual event handlers, override them in your derived class
+     virtual void onClose( wxCloseEvent& event ) { event.Skip(); }
 +#if 0
- 		virtual void onChangeColorTheme( wxCommandEvent& event ) { event.Skip(); }
+     virtual void onChangeColorTheme( wxCommandEvent& event ) { event.Skip(); }
 +#endif
- 		virtual void onShowHiddenDialogs( wxCommandEvent& event ) { event.Skip(); }
- 		virtual void onToggleHiddenDialog( wxCommandEvent& event ) { event.Skip(); }
- 		virtual void onShowLogFolder( wxCommandEvent& event ) { event.Skip(); }
+     virtual void onShowHiddenDialogs( wxCommandEvent& event ) { event.Skip(); }
+     virtual void onToggleHiddenDialog( wxCommandEvent& event ) { event.Skip(); }
+     virtual void onShowLogFolder( wxCommandEvent& event ) { event.Skip(); }
 --- a/FreeFileSync/Source/ui/main_dlg.cpp	2025-01-20 20:15:31.779789648 -0500
 +++ b/FreeFileSync/Source/ui/main_dlg.cpp	2025-01-22 20:30:23.468407126 -0500
 @@ -6187,10 +6187,13 @

@@ -255,6 +255,7 @@ PATCHES="
     disable-getentropy.patch
     disable-minimize-to-tray.patch
     disable-color-theme.patch
+    libglib2_libidn2_conflict_fix_G_GNUC_UNUSED_failure.patch
 "
 for PATCH in $PATCHES; do
     log "Applying $PATCH..."

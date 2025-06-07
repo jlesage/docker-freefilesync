@@ -1,51 +1,51 @@
 --- a/FreeFileSync/Source/ui/gui_generated.cpp	2023-10-01 09:45:00.211330193 -0400
 +++ b/FreeFileSync/Source/ui/gui_generated.cpp	2023-10-01 22:35:30.501411803 -0400
-@@ -3776,10 +3780,12 @@
+@@ -3891,10 +3895,12 @@
  
- 	bSizer247->Add( 0, 0, 1, 0, 5 );
+     bSizer247->Add( 0, 0, 1, 0, 5 );
  
 +#if 0
- 	m_bpButtonMinimizeToTray = new wxBitmapButton( m_panel53, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxSize( -1,-1 ), wxBU_AUTODRAW|0 );
- 	m_bpButtonMinimizeToTray->SetToolTip( _("Minimize to notification area") );
+     m_bpButtonMinimizeToTray = new wxBitmapButton( m_panel53, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxSize( -1, -1 ), wxBU_AUTODRAW|0 );
+     m_bpButtonMinimizeToTray->SetToolTip( _("Minimize to notification area") );
  
- 	bSizer247->Add( m_bpButtonMinimizeToTray, 0, wxALIGN_CENTER_VERTICAL, 5 );
+     bSizer247->Add( m_bpButtonMinimizeToTray, 0, wxALIGN_CENTER_VERTICAL, 5 );
 +#endif
  
  
- 	bSizer42->Add( bSizer247, 1, wxALIGN_CENTER_VERTICAL, 5 );
-@@ -4222,8 +4228,10 @@
- 	ffgSizer11->SetFlexibleDirection( wxBOTH );
- 	ffgSizer11->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+     bSizer42->Add( bSizer247, 1, wxALIGN_CENTER_VERTICAL, 5 );
+@@ -4350,8 +4356,10 @@
+     ffgSizer11->SetFlexibleDirection( wxBOTH );
+     ffgSizer11->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
  
 +#if 0
- 	m_bitmapMinimizeToTray = new wxStaticBitmap( m_panel35, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, 0 );
- 	ffgSizer11->Add( m_bitmapMinimizeToTray, 0, wxALIGN_CENTER_VERTICAL, 5 );
+     m_bitmapMinimizeToTray = new wxStaticBitmap( m_panel35, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, 0 );
+     ffgSizer11->Add( m_bitmapMinimizeToTray, 0, wxALIGN_CENTER_VERTICAL, 5 );
 +#endif
  
- 	m_checkBoxRunMinimized = new wxCheckBox( m_panel35, wxID_ANY, _("Run minimized"), wxDefaultPosition, wxDefaultSize, 0 );
- 	ffgSizer11->Add( m_checkBoxRunMinimized, 0, wxEXPAND|wxALIGN_CENTER_VERTICAL, 5 );
+     m_checkBoxRunMinimized = new wxCheckBox( m_panel35, wxID_ANY, _("Run minimized"), wxDefaultPosition, wxDefaultSize, 0 );
+     ffgSizer11->Add( m_checkBoxRunMinimized, 0, wxEXPAND|wxALIGN_CENTER_VERTICAL, 5 );
 --- a/FreeFileSync/Source/ui/gui_generated.h	2023-10-01 09:45:05.811345211 -0400
 +++ b/FreeFileSync/Source/ui/gui_generated.h	2023-10-01 22:35:50.069460201 -0400
-@@ -860,7 +864,9 @
- 		wxStaticBitmap* m_bitmapStatus;
- 		wxStaticText* m_staticTextPhase;
- 		wxStaticText* m_staticTextPercentTotal;
+@@ -738,7 +742,9 @@
+     wxStaticBitmap* m_bitmapStatus;
+     wxStaticText* m_staticTextPhase;
+     wxStaticText* m_staticTextPercentTotal;
 +#if 0
- 		wxBitmapButton* m_bpButtonMinimizeToTray;
+     wxBitmapButton* m_bpButtonMinimizeToTray;
 +#endif
- 		wxBoxSizer* bSizerStatusText;
- 		wxStaticText* m_staticTextStatus;
- 		wxPanel* m_panelProgress;
-@@ -951,7 +957,9 @@
- 	protected:
- 		wxStaticBitmap* m_bitmapBatchJob;
- 		wxStaticText* m_staticTextHeader;
+     wxBoxSizer* bSizerStatusText;
+     wxStaticText* m_staticTextStatus;
+     wxPanel* m_panelProgress;
+@@ -824,7 +830,9 @@
+ protected:
+     wxStaticBitmap* m_bitmapBatchJob;
+     wxStaticText* m_staticTextHeader;
 +#if 0
- 		wxStaticBitmap* m_bitmapMinimizeToTray;
+     wxStaticBitmap* m_bitmapMinimizeToTray;
 +#endif
- 		wxCheckBox* m_checkBoxRunMinimized;
- 		wxCheckBox* m_checkBoxAutoClose;
- 		wxStaticBitmap* m_bitmapIgnoreErrors;
+     wxCheckBox* m_checkBoxRunMinimized;
+     wxCheckBox* m_checkBoxAutoClose;
+     wxStaticBitmap* m_bitmapIgnoreErrors;
 --- a/FreeFileSync/Source/ui/progress_indicator.cpp	2023-10-02 17:07:53.344092747 -0400
 +++ b/FreeFileSync/Source/ui/progress_indicator.cpp	2023-10-02 17:10:33.512515516 -0400
 @@ -824,7 +824,9 @@
