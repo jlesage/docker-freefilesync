@@ -118,13 +118,13 @@ fi
 unzip -d /tmp/freefilesync /tmp/freefilesync.zip
 
 log "Download wxWidgets package..."
-if [ -n "${WXWIDGETS_URL##*@}" ]; then
+if [ "${WXWIDGETS_URL##*@}" != "${WXWIDGETS_URL}" ]; then
     git clone "${WXWIDGETS_URL%%@*}" /tmp/wxwidgets
     git -C /tmp/wxwidgets reset --hard "${WXWIDGETS_URL##*@}"
     git -C /tmp/wxwidgets submodule update --init
 else
     mkdir /tmp/wxwidgets
-    curl -# -L -f "${WXWIDGETS_URL}" | tar xz --strip 1 -C /tmp/wxwidgets
+    curl -# -L -f "${WXWIDGETS_URL}" | tar xj --strip 1 -C /tmp/wxwidgets
 fi
 
 log "Download libssh2 package..."
