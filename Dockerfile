@@ -55,7 +55,7 @@ RUN xx-verify /tmp/freefilesync/FreeFileSync/Build/Bin/FreeFileSync
 
 # Pull base image.
 
-FROM jlesage/baseimage-gui:alpine-3.17-v4.8.2
+FROM jlesage/baseimage-gui:alpine-3.17-v4.9.0
 
 ARG FREEFILESYNC_VERSION
 ARG DOCKER_IMAGE_VERSION
