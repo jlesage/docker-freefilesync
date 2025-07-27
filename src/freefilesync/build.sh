@@ -65,6 +65,7 @@ apk --no-cache add \
     patch \
     make \
     pkgconf \
+    perl \
 
 if xx-info is-cross; then
     apk --no-cache --allow-untrusted --repository http://mirror.postmarketos.org/postmarketos/v22.12 add \
@@ -255,7 +256,6 @@ PATCHES="
     disable-getentropy.patch
     disable-minimize-to-tray.patch
     disable-color-theme.patch
-    libglib2_libidn2_conflict_fix_G_GNUC_UNUSED_failure.patch
 "
 for PATCH in $PATCHES; do
     log "Applying $PATCH..."

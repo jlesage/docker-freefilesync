@@ -43,8 +43,8 @@
  
          /* But only if a body transfer was requested. */
          if(ftp->transfer == PPTRANSFER_BODY) {
--          result = ftp_nb_type(data, conn, TRUE, FTP_LIST_TYPE);
-+          result = ftp_nb_type(data, conn, data->set.prefer_ascii, FTP_LIST_TYPE);
+-          result = ftp_nb_type(data, ftpc, ftp, TRUE, FTP_LIST_TYPE);
++          result = ftp_nb_type(data, ftpc, ftp, data->set.prefer_ascii, FTP_LIST_TYPE);
            if(result)
              return result;
          }

@@ -9,20 +9,6 @@
 
  LDFLAGS += -s -no-pie `wx-config --libs std, aui, richtext --debug=no` -pthread
 
---- a/FreeFileSync/Source/base/icon_loader.cpp
-+++ b/FreeFileSync/Source/base/icon_loader.cpp
-@@ -216,7 +216,11 @@
-     //the remaining icon types won't block!
-     assert(GDK_IS_PIXBUF(gicon) || G_IS_THEMED_ICON(gicon) || G_IS_EMBLEMED_ICON(gicon));
- 
-+#if (GLIB_CHECK_VERSION (2, 67, 0))
-+    g_object_ref(gicon);                   //pass ownership
-+#else
-     ::g_object_ref(gicon);                 //pass ownership
-+#endif
-     return FileIconHolder(gicon, maxSize); //
- 
- }
 --- a/zen/format_unit.cpp
 +++ b/zen/format_unit.cpp
 @@ -186,7 +186,11 @@
@@ -48,26 +34,3 @@
  #ifndef __GLIBC_PREREQ
  #error Where is Glibc?
  #endif
---- a/zen/open_ssl.cpp
-+++ b/zen/open_ssl.cpp
-@@ -226,9 +226,20 @@
-                 throw SysError(formatLastOpenSSLError("BIO_new"));
-             ZEN_ON_SCOPE_EXIT(::BIO_free_all(bio));
- 
-+#if 1 // Only when compiling with clang ?
-             if ((publicKey ?
-                  ::PEM_write_bio_PUBKEY :
-                  PEM_write_bio_PrivateKey2)(bio, evp) != 1)
-+#else
-+            int rc;
-+            if (publicKey) {
-+                rc = ::PEM_write_bio_PUBKEY(bio, evp);
-+            }
-+            else {
-+                rc = PEM_write_bio_PrivateKey2(bio, evp);
-+            }
-+            if (rc != 1)
-+#endif
-                 throw SysError(formatLastOpenSSLError(publicKey ? "PEM_write_bio_PUBKEY" : "PEM_write_bio_PrivateKey"));
-             //---------------------------------------------
-             const int keyLen = BIO_pending(bio);
