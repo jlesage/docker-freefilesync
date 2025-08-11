@@ -38,6 +38,7 @@ for ID in $(env | sed -nr 's/FFS_SCHEDULED_BATCH_JOB_([0-9]+)_NAME=.*/\1/p')
 do
     eval "JOB_NAME=\"\${FFS_SCHEDULED_BATCH_JOB_${ID}_NAME:-}\""
     eval "JOB_CRON=\"\${FFS_SCHEDULED_BATCH_JOB_${ID}_CRON:-}\""
+    eval "JOB_CMD=\"\${FFS_SCHEDULED_BATCH_JOB_${ID}_CMD:-}\""
 
     if [ -z "$JOB_NAME" ]; then
         echo "ERROR: FFS_SCHEDULED_BATCH_JOB_${ID}_NAME environment variable has no value."
@@ -60,5 +61,9 @@ do
         fi
     fi
 
-    echo "$JOB_CRON /opt/FreeFileSync/Bin/FreeFileSync /config/$JOB_NAME.ffs_batch" >> /tmp/ffs_batch_jobs.cron
+    if [ -n "$JOB_CMD" ]; then
+        echo "$JOB_CRON /opt/FreeFileSync/Bin/FreeFileSync /config/$JOB_NAME.ffs_batch && $JOB_CMD" >> /tmp/ffs_batch_jobs.cron
+    else
+        echo "$JOB_CRON /opt/FreeFileSync/Bin/FreeFileSync /config/$JOB_NAME.ffs_batch" >> /tmp/ffs_batch_jobs.cron
+    fi
 done

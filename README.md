@@ -669,6 +669,8 @@ environment variables:
   name of the saved FreeFileSync synchronization configuration.
 - `FFS_SCHEDULED_BATCH_JOB_<ID>_CRON`: Cron expression of the schedule.  See
   https://crontab.guru to create a valid Cron expression.
+- `FFS_SCHEDULED_BATCH_JOB_<ID>_CMD` *(optional)*: An additional shell command
+  to run after the FreeFileSync job completes successfully.
 
 Where `<ID>` is a numerical identifier of your choice.
 
