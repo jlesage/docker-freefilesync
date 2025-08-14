@@ -77,8 +77,7 @@ RUN \
         adwaita-icon-theme \
         supercronic \
         pcmanfm \
-        firefox-esr \
-        curl
+        firefox-esr
 
 # Generate and install favicons.
 RUN \
