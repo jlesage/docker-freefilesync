@@ -256,6 +256,7 @@ PATCHES="
     disable-getentropy.patch
     disable-minimize-to-tray.patch
     disable-color-theme.patch
+    user-data-path.patch
 "
 for PATCH in $PATCHES; do
     log "Applying $PATCH..."

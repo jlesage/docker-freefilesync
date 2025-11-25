@@ -1,0 +1,15 @@
+#
+# Always use XDG_CONFIG_HOME, even for root.
+#
+--- FreeFileSync_14.5/zen/sys_info.cpp2	2025-11-24 22:53:48.412376766 -0500
++++ FreeFileSync_14.5/zen/sys_info.cpp	2025-11-24 22:54:01.763664686 -0500
+@@ -255,7 +255,9 @@
+ 
+ Zstring zen::getUserDataPath() //throw FileError
+ {
++#if 0
+     if (::getuid() != 0) //nofail; non-root
++#endif
+         if (const std::optional<Zstring> xdgCfgPath = getEnvironmentVar("XDG_CONFIG_HOME");
+             xdgCfgPath&& !xdgCfgPath->empty())
+             return *xdgCfgPath;
