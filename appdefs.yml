@@ -55,6 +55,10 @@ app:
           **NOTE**: Make sure to first run the batch job from the UI to make sure there is
           no issue with the job itself.
   changelog:
+    - version: 25.11.2
+      date: 2025-11-25
+      changes:
+        - 'Fixed issue where FreeFileSync configuration files would not be saved at the correct location when running as root.'
     - version: 25.11.1
       date: 2025-11-11
       changes:
