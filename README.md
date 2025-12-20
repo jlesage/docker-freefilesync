@@ -548,19 +548,10 @@ server {
 	server_name freefilesync.domain.tld;
 
 	location / {
-	        proxy_pass http://docker-freefilesync;
+		proxy_pass http://docker-freefilesync;
 	}
 
 	location /websockify {
-		proxy_pass http://docker-freefilesync;
-		proxy_http_version 1.1;
-		proxy_set_header Upgrade $http_upgrade;
-		proxy_set_header Connection $connection_upgrade;
-		proxy_read_timeout 86400;
-	}
-
-	# Needed when audio support is enabled.
-	location /websockify-audio {
 		proxy_pass http://docker-freefilesync;
 		proxy_http_version 1.1;
 		proxy_set_header Upgrade $http_upgrade;
@@ -603,16 +594,8 @@ server {
 		# Uncomment the following line if your Nginx server runs on a port that
 		# differs from the one seen by external clients.
 		#port_in_redirect off;
-		location /freefilesync/websockify {
-			proxy_pass http://docker-freefilesync/websockify;
-			proxy_http_version 1.1;
-			proxy_set_header Upgrade $http_upgrade;
-			proxy_set_header Connection $connection_upgrade;
-			proxy_read_timeout 86400;
-		}
-		# Needed when audio support is enabled.
-		location /freefilesync/websockify-audio {
-			proxy_pass http://docker-freefilesync/websockify-audio;
+		location ~ ^/freefilesync/(websockify(-.*)?) {
+                        proxy_pass http://docker-freefilesync/$1;
 			proxy_http_version 1.1;
 			proxy_set_header Upgrade $http_upgrade;
 			proxy_set_header Connection $connection_upgrade;
