@@ -216,7 +216,7 @@ app:
         - '2:Rebuilt against latest distro images to get security fixes.'
         - '2:Updated X server to version 1.20.14.'
     - version: 23.05.1
-      date: 2024-05-15
+      date: 2023-05-15
       changes:
         - 'Initial release.'
 
