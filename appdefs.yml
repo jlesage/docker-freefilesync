@@ -30,17 +30,17 @@ app:
         level: 2
         content: |-
           This container provides an easy way to run FreeFileSync batch jobs according to
-          a specified schedule.  One or more jobs can be configured via the following
+          a specified schedule. One or more jobs can be configured via the following
           environment variables:
 
-          - `FFS_SCHEDULED_BATCH_JOB_<ID>_NAME`: Name of the job.  Must match the file
+          - `FFS_SCHEDULED_BATCH_JOB_<ID>_NAME`: Name of the job. Must match the file
             name of the saved FreeFileSync synchronization configuration.
-          - `FFS_SCHEDULED_BATCH_JOB_<ID>_CRON`: Cron expression of the schedule.  See
+          - `FFS_SCHEDULED_BATCH_JOB_<ID>_CRON`: Cron expression of the schedule. See
             https://crontab.guru to create a valid Cron expression.
 
           Where `<ID>` is a numerical identifier of your choice.
 
-          First, the synchronization configuration must be setup in FreeFileSync.  Once
+          First, the synchronization configuration must be setup in FreeFileSync. Once
           done, it has to be saved as a "batch Job", under `/config` inside the container.
           The name of the file, without the `.ffs_batch` extension, must match the name of
           the job set via the environment variable.
@@ -50,7 +50,7 @@ app:
           `/config/MyBackup1.ffs_batch`.
 
           **NOTE**: When saving a batch job, it is advised to enable the `Auto-close`
-          option.  Else, the job won't run again unless its window is manually closed.
+          option. Else, the job won't run again unless its window is manually closed.
 
           **NOTE**: Make sure to first run the batch job from the UI to make sure there is
           no issue with the job itself.

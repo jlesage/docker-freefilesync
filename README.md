@@ -120,7 +120,7 @@ the `-e` parameter in the format `<VARIABLE_NAME>=<VALUE>`.
 |`LANG`| Sets the [locale](https://en.wikipedia.org/wiki/Locale_(computer_software)), defining the application's language, if supported. Format is `language[_territory][.codeset]`, where language is an [ISO 639 language code](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes), territory is an [ISO 3166 country code](https://en.wikipedia.org/wiki/ISO_3166-1#Current_codes), and codeset is a character set, like `UTF-8`. For example, Australian English using UTF-8 is `en_AU.UTF-8`. | `en_US.UTF-8` |
 |`TZ`| [TimeZone](http://en.wikipedia.org/wiki/List_of_tz_database_time_zones) used by the container. The timezone can also be set by mapping `/etc/localtime` between the host and the container. | `Etc/UTC` |
 |`KEEP_APP_RUNNING`| When set to `1`, the application is automatically restarted if it crashes or terminates. | `0` |
-|`APP_NICENESS`| Priority at which the application runs. A niceness value of -20 is the highest, 19 is the lowest and 0 the default. **NOTE**: A negative niceness (priority increase) requires additional permissions. The container must be run with the Docker option `--cap-add=SYS_NICE`. | `0` |
+|`APP_NICENESS`| Priority at which the application runs. A niceness value of `-20` is the highest, `19` is the lowest and `0` the default. **NOTE**: A negative niceness (priority increase) requires additional permissions. The container must be run with the Docker option `--cap-add=SYS_NICE`. | `0` |
 |`INSTALL_PACKAGES`| Space-separated list of packages to install during container startup. List of available packages can be found at https://pkgs.alpinelinux.org. | (no value) |
 |`PACKAGES_MIRROR`| Mirror of the repository to use when installing packages. List of mirrors is available at https://mirrors.alpinelinux.org. | (no value) |
 |`CONTAINER_DEBUG`| When set to `1`, enables debug logging. | `0` |
@@ -750,17 +750,17 @@ creation.
 ## Scheduled Batch Jobs
 
 This container provides an easy way to run FreeFileSync batch jobs according to
-a specified schedule.  One or more jobs can be configured via the following
+a specified schedule. One or more jobs can be configured via the following
 environment variables:
 
-- `FFS_SCHEDULED_BATCH_JOB_<ID>_NAME`: Name of the job.  Must match the file
+- `FFS_SCHEDULED_BATCH_JOB_<ID>_NAME`: Name of the job. Must match the file
   name of the saved FreeFileSync synchronization configuration.
-- `FFS_SCHEDULED_BATCH_JOB_<ID>_CRON`: Cron expression of the schedule.  See
+- `FFS_SCHEDULED_BATCH_JOB_<ID>_CRON`: Cron expression of the schedule. See
   https://crontab.guru to create a valid Cron expression.
 
 Where `<ID>` is a numerical identifier of your choice.
 
-First, the synchronization configuration must be setup in FreeFileSync.  Once
+First, the synchronization configuration must be setup in FreeFileSync. Once
 done, it has to be saved as a "batch Job", under `/config` inside the container.
 The name of the file, without the `.ffs_batch` extension, must match the name of
 the job set via the environment variable.
@@ -770,7 +770,7 @@ FreeFileSync synchronization configuration should be saved to
 `/config/MyBackup1.ffs_batch`.
 
 **NOTE**: When saving a batch job, it is advised to enable the `Auto-close`
-option.  Else, the job won't run again unless its window is manually closed.
+option. Else, the job won't run again unless its window is manually closed.
 
 **NOTE**: Make sure to first run the batch job from the UI to make sure there is
 no issue with the job itself.
