@@ -23,7 +23,7 @@ export PKG_CONFIG_PATH=$(xx-info sysroot)usr/share/pkgconfig
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
-function log {
+log() {
     echo ">>> $*"
 }
 
