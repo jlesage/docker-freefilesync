@@ -3,59 +3,59 @@
 #
 --- a/FreeFileSync/Source/ui/gui_generated.cpp	2025-01-20 20:15:00.290738310 -0500
 +++ b/FreeFileSync/Source/ui/gui_generated.cpp	2025-01-22 19:46:22.820913326 -0500
-@@ -4939,6 +4947,7 @@
-     m_staticline39 = new wxStaticLine( m_panel39, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_VERTICAL );
-     bSizer186->Add( m_staticline39, 0, wxEXPAND, 5 );
+@@ -4923,6 +4923,7 @@
+ 	m_staticline39 = new wxStaticLine( m_panel39, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_VERTICAL );
+ 	bSizer186->Add( m_staticline39, 0, wxEXPAND, 5 );
  
 +#if 0
-     bSizerColorTheme = new wxBoxSizer( wxHORIZONTAL );
+ 	bSizerColorTheme = new wxBoxSizer( wxHORIZONTAL );
  
-     m_bitmapColorTheme = new wxStaticBitmap( m_panel39, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, 0 );
-@@ -4962,6 +4971,7 @@
+ 	m_bitmapColorTheme = new wxStaticBitmap( m_panel39, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, 0 );
+@@ -4946,6 +4947,7 @@
  
  
-     bSizer186->Add( bSizerColorTheme, 0, wxEXPAND|wxALL, 5 );
+ 	bSizer186->Add( bSizerColorTheme, 0, wxEXPAND|wxALL, 5 );
 +#endif
  
  
-     bSizer166->Add( bSizer186, 0, wxEXPAND, 5 );
-@@ -5416,7 +5426,9 @@
+ 	bSizer166->Add( bSizer186, 0, wxEXPAND, 5 );
+@@ -5398,7 +5400,9 @@
  
-     // Connect Events
-     this->Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( OptionsDlgGenerated::onClose ) );
+ 	// Connect Events
+ 	this->Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( OptionsDlgGenerated::onClose ) );
 +#if 0
-     m_choiceColorTheme->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( OptionsDlgGenerated::onChangeColorTheme ), NULL, this );
+ 	m_choiceColorTheme->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( OptionsDlgGenerated::onChangeColorTheme ), NULL, this );
 +#endif
-     m_buttonShowHiddenDialogs->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( OptionsDlgGenerated::onShowHiddenDialogs ), NULL, this );
-     m_checkListHiddenDialogs->Connect( wxEVT_COMMAND_CHECKLISTBOX_TOGGLED, wxCommandEventHandler( OptionsDlgGenerated::onToggleHiddenDialog ), NULL, this );
-     m_bpButtonShowLogFolder->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( OptionsDlgGenerated::onShowLogFolder ), NULL, this );
+ 	m_buttonShowHiddenDialogs->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( OptionsDlgGenerated::onShowHiddenDialogs ), NULL, this );
+ 	m_checkListHiddenDialogs->Connect( wxEVT_COMMAND_CHECKLISTBOX_TOGGLED, wxCommandEventHandler( OptionsDlgGenerated::onToggleHiddenDialog ), NULL, this );
+ 	m_bpButtonShowLogFolder->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( OptionsDlgGenerated::onShowLogFolder ), NULL, this );
 --- a/FreeFileSync/Source/ui/gui_generated.h	2025-01-20 20:15:12.549758207 -0500
 +++ b/FreeFileSync/Source/ui/gui_generated.h	2025-01-22 19:48:12.706040513 -0500
-@@ -962,9 +970,11 @@
-     wxBoxSizer* bSizerLockedFiles;
-     wxCheckBox* m_checkBoxCopyLocked;
-     wxCheckBox* m_checkBoxCopyPermissions;
+@@ -962,9 +962,11 @@
+ 		wxBoxSizer* bSizerLockedFiles;
+ 		wxCheckBox* m_checkBoxCopyLocked;
+ 		wxCheckBox* m_checkBoxCopyPermissions;
 +#if 0
-     wxBoxSizer* bSizerColorTheme;
-     wxStaticBitmap* m_bitmapColorTheme;
-     wxChoice* m_choiceColorTheme;
+ 		wxBoxSizer* bSizerColorTheme;
+ 		wxStaticBitmap* m_bitmapColorTheme;
+ 		wxChoice* m_choiceColorTheme;
 +#endif
-     wxStaticBitmap* m_bitmapWarnings;
-     wxStaticText* m_staticTextHiddenDialogsCount;
-     wxButton* m_buttonShowHiddenDialogs;
-@@ -1005,7 +1015,9 @@
+ 		wxStaticBitmap* m_bitmapWarnings;
+ 		wxStaticText* m_staticTextHiddenDialogsCount;
+ 		wxButton* m_buttonShowHiddenDialogs;
+@@ -1005,7 +1007,9 @@
  
-     // Virtual event handlers, override them in your derived class
-     virtual void onClose( wxCloseEvent& event ) { event.Skip(); }
+ 		// Virtual event handlers, override them in your derived class
+ 		virtual void onClose( wxCloseEvent& event ) { event.Skip(); }
 +#if 0
-     virtual void onChangeColorTheme( wxCommandEvent& event ) { event.Skip(); }
+ 		virtual void onChangeColorTheme( wxCommandEvent& event ) { event.Skip(); }
 +#endif
-     virtual void onShowHiddenDialogs( wxCommandEvent& event ) { event.Skip(); }
-     virtual void onToggleHiddenDialog( wxCommandEvent& event ) { event.Skip(); }
-     virtual void onShowLogFolder( wxCommandEvent& event ) { event.Skip(); }
+ 		virtual void onShowHiddenDialogs( wxCommandEvent& event ) { event.Skip(); }
+ 		virtual void onToggleHiddenDialog( wxCommandEvent& event ) { event.Skip(); }
+ 		virtual void onShowLogFolder( wxCommandEvent& event ) { event.Skip(); }
 --- a/FreeFileSync/Source/ui/main_dlg.cpp	2025-01-20 20:15:31.779789648 -0500
 +++ b/FreeFileSync/Source/ui/main_dlg.cpp	2025-01-22 20:30:23.468407126 -0500
-@@ -6187,10 +6187,13 @
+@@ -6205,10 +6205,13 @@
  
  void MainDialog::onMenuOptions(wxCommandEvent& event)
  {
@@ -69,7 +69,7 @@
      if (!equalAppearance(globalCfg_.appColorTheme, colorThemeOld))
      {
          if (!folderCmp_.empty()) //otherwise: why bother the user?
-@@ -6235,6 +6238,7 @@
+@@ -6253,6 +6256,7 @@
              terminateProcess(static_cast<int>(FfsExitCode::success));
          }
      }
@@ -79,7 +79,7 @@
  
 --- a/FreeFileSync/Source/ui/small_dlgs.cpp	2025-01-20 20:31:14.579742266 -0500
 +++ b/FreeFileSync/Source/ui/small_dlgs.cpp	2025-01-22 20:33:48.177367133 -0500
-@@ -1341,7 +1341,9 @@
+@@ -1335,7 +1335,9 @@
      void selectSound(wxTextCtrl& txtCtrl);
  
      void onChangeSoundFilePath(wxCommandEvent& event) override { updateGui(); }
@@ -89,7 +89,7 @@
  
      void onPlayCompareDone (wxCommandEvent& event) override { playSoundWithDiagnostics(trimCpy(m_textCtrlSoundPathCompareDone ->GetValue())); }
      void onPlaySyncDone    (wxCommandEvent& event) override { playSoundWithDiagnostics(trimCpy(m_textCtrlSoundPathSyncDone    ->GetValue())); }
-@@ -1373,6 +1375,7 @@
+@@ -1367,6 +1369,7 @@
  
      const GlobalConfig defaultCfg_;
  
@@ -97,7 +97,7 @@
      EnumDescrList<ColorTheme> enumColorTheme_
      {
          *m_choiceColorTheme,
-@@ -1384,6 +1387,7 @@
+@@ -1378,6 +1381,7 @@
      };
  
      std::optional<ColorTheme> colorThemeIcon_;
@@ -105,7 +105,7 @@
  
      std::vector<std::tuple<std::function<bool(const GlobalConfig& cfg)> /*get dialog shown status*/,
          std::function<void(GlobalConfig& gs, bool show)> /*set dialog shown status*/,
-@@ -1529,8 +1533,10 @@
+@@ -1523,8 +1527,10 @@
      m_checkBoxCopyLocked     ->SetValue(globalCfg.copyLockedFiles);
      m_checkBoxCopyPermissions->SetValue(globalCfg.copyFilePermissions);
  
@@ -116,7 +116,7 @@
  
      m_checkBoxLogFilesMaxAge->SetValue(globalCfg.logfilesMaxAgeDays > 0);
      m_spinCtrlLogFilesMaxAge->SetValue(globalCfg.logfilesMaxAgeDays > 0 ? globalCfg.logfilesMaxAgeDays : GlobalConfig().logfilesMaxAgeDays);
-@@ -1733,6 +1739,7 @@
+@@ -1726,6 +1732,7 @@
  
  void OptionsDlg::updateGui()
  {
@@ -124,7 +124,7 @@
      if (!colorThemeIcon_ || *colorThemeIcon_ != enumColorTheme_.get()) //perf? don't update icon unless needed
          switch (enumColorTheme_.get())
          {
-@@ -1747,6 +1754,7 @@
+@@ -1740,6 +1747,7 @@
                  break;
          }
      colorThemeIcon_ = enumColorTheme_.get();
@@ -132,7 +132,7 @@
  
      m_spinCtrlLogFilesMaxAge->Enable(m_checkBoxLogFilesMaxAge->GetValue());
  
-@@ -1819,7 +1827,9 @@
+@@ -1812,7 +1820,9 @@
      m_checkBoxCopyLocked     ->SetValue(defaultCfg_.copyLockedFiles);
      m_checkBoxCopyPermissions->SetValue(defaultCfg_.copyFilePermissions);
  
@@ -142,7 +142,7 @@
  
      unsigned int itemPos = 0;
      for (const auto& [dlgShown, dlgSetShown, msg] : hiddenDialogCfgMapping_)
-@@ -1863,7 +1873,9 @@
+@@ -1856,7 +1866,9 @@
      globalCfgOut_.copyLockedFiles     = m_checkBoxCopyLocked->GetValue();
      globalCfgOut_.copyFilePermissions = m_checkBoxCopyPermissions->GetValue();
  
@@ -180,7 +180,7 @@
  
      in2["FailSafeFileCopy"         ].attribute("Enabled", cfg.failSafeFileCopy);
      in2["CopyLockedFiles"          ].attribute("Enabled", cfg.copyLockedFiles);
-@@ -2139,7 +2143,9 @@
+@@ -2160,7 +2164,9 @@
  void writeConfig(const GlobalConfig& cfg, XmlOut& out)
  {
      out["Language"].attribute("Code", cfg.programLanguage);
