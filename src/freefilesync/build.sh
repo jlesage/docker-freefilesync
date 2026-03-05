@@ -256,6 +256,7 @@ PATCHES="
     disable-minimize-to-tray.patch
     disable-color-theme.patch
     user-data-path.patch
+    static-assert-fix.patch
 "
 for PATCH in $PATCHES; do
     log "Applying $PATCH..."
