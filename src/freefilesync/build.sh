@@ -158,6 +158,7 @@ log "Configuring wxWidgets..."
         --disable-shared \
         --disable-xlocale \
         --disable-exceptions \
+        --without-wayland \
         --with-gtk=3 \
 )
 
