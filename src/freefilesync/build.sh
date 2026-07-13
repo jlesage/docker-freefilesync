@@ -11,6 +11,9 @@ export LDFLAGS="--sysroot=$(xx-info sysroot)"
 if xx-info is-cross; then
     export CC=$(xx-info)-gcc
     export CXX=$(xx-info)-g++
+    # When linking against shared libraries under the sysroot, the linker must
+    # be told where to find their transitive dependencies (epoxy, X11, …).
+    export LDFLAGS="$LDFLAGS -Wl,-rpath-link=$(xx-info sysroot)usr/lib:$(xx-info sysroot)lib"
 else
     export CC=gcc
     export CXX=g++

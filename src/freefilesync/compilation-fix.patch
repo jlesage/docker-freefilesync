@@ -9,6 +9,17 @@
  
  LDFLAGS += -s -pthread
  
+@@ -35,6 +35,9 @@
+ LDFLAGS  += `pkg-config --libs libselinux`
+ endif
+ 
++# Expand LDFLAGS and drop -R* flags (invalid for the GCC driver).
++LDFLAGS := $(filter-out -R%,$(shell echo $(LDFLAGS)))
++
+ cppFiles=
+ cppFiles+=application.cpp
+ cppFiles+=base_tools.cpp
+ 
 --- a/FreeFileSync/Source/RealTimeSync/Makefile	2025-12-02 21:23:08.374258449 -0500
 +++ b/FreeFileSync/Source/RealTimeSync/Makefile	2025-12-02 21:25:55.053539102 -0500
 @@ -3,7 +3,7 @@
