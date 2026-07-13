@@ -68,7 +68,7 @@ apk --no-cache add \
     perl \
 
 if xx-info is-cross; then
-    apk --no-cache --allow-untrusted --repository http://mirror.postmarketos.org/postmarketos/v22.12 add \
+    apk --no-cache --allow-untrusted --repository http://mirror.postmarketos.org/postmarketos/v24.12 add \
         binutils-$(xx-info alpine-arch) \
         g++-$(xx-info alpine-arch) \
         musl-dev-$(xx-info alpine-arch)
@@ -233,6 +233,8 @@ log "Configuring curl..."
         --with-pic \
         --enable-websockets \
         --without-libssh2 \
+        --without-libpsl \
+        --without-brotli \
 )
 
 log "Compiling curl..."
