@@ -130,7 +130,7 @@ jobs:
             GOOGLE_CLIENT_SECRET_K1=${{ secrets.GOOGLE_CLIENT_SECRET_K1 }}
             GOOGLE_CLIENT_SECRET_K2=${{ secrets.GOOGLE_CLIENT_SECRET_K2 }}
           cache-from: type=registry,ref=${{ env.CACHE_IMAGE }}
-          cache-to: type=registry,ref=${{ env.CACHE_IMAGE }},mode=max
+          cache-to: ${{ github.ref == 'refs/heads/master' && format('type=registry,ref={0},mode=max', env.CACHE_IMAGE) || '' }}
 
       - name: Inspect
         if: ${{ steps.prep.outputs.is_release == 'yes' }}
