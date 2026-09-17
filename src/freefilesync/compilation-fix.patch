@@ -9,7 +9,7 @@
  
  LDFLAGS += -s -pthread
  
-@@ -35,6 +35,9 @@
+@@ -34,6 +34,9 @@
  LDFLAGS  += `pkg-config --libs libselinux`
  endif
  
@@ -19,9 +19,8 @@
  cppFiles=
  cppFiles+=application.cpp
  cppFiles+=base_tools.cpp
- 
---- a/FreeFileSync/Source/RealTimeSync/Makefile	2025-12-02 21:23:08.374258449 -0500
-+++ b/FreeFileSync/Source/RealTimeSync/Makefile	2025-12-02 21:25:55.053539102 -0500
+--- a/FreeFileSync/Source/RealTimeSync/Makefile
++++ b/FreeFileSync/Source/RealTimeSync/Makefile
 @@ -3,7 +3,7 @@
  
  CXXFLAGS += -std=c++23 -pipe -DWXINTL_NO_GETTEXT_MACRO -I../../.. -I../../../zenXml -include "zen/i18n.h" \
@@ -33,7 +32,7 @@
  
 --- a/zen/format_unit.cpp
 +++ b/zen/format_unit.cpp
-@@ -186,7 +186,11 @@
+@@ -210,7 +210,11 @@
          ---------------------------------------
          LC_TIME=en_DK.utf8    => Monday
          LC_TIME=en_US.utf8    => Sunday       */
@@ -44,10 +43,10 @@
 +#endif
      ASSERT_SYSERROR(firstDay && 1 <= *firstDay && *firstDay <= 7);
  
-     const int weekDayStartSunday = *firstDay;
+     const int weekDayStartSunday = *firstDay;                        //[1-Sunday, 7-Saturday]
 --- a/zen/guid.h
 +++ b/zen/guid.h
-@@ -20,6 +20,8 @@
+@@ -17,6 +17,8 @@
  {
      std::string guid(16, '\0');
  
@@ -56,9 +55,46 @@
  #ifndef __GLIBC_PREREQ
  #error Where is Glibc?
  #endif
---- a/FreeFileSync/Source/base/versioning.cpp	2026-02-19 19:09:21.775387095 -0500
-+++ b/FreeFileSync/Source/base/versioning.cpp	2026-02-19 19:13:17.808172282 -0500
-@@ -559,7 +559,7 @@
+--- a/zen/string_traits.h
++++ b/zen/string_traits.h
+@@ -49,15 +49,15 @@ class GetCharTypeImpl;
+ template <class S>
+ class GetCharTypeImpl<S, StringType::class_>
+ {
+-    static char    conversionType(const char*);
+-    static wchar_t conversionType(const wchar_t*);
+-    //static char8_t  conversionType(const char8_t*);
+-    //static char16_t conversionType(const char16_t*);
+-    //static char32_t conversionType(const char32_t*);
+-    static void    conversionType(...);
++    // wxString::c_str() returns wxCStrData, convertible to both const char* and
++    // const wchar_t*; testing those conversions in one overload set is ambiguous.
++    using CStrType = decltype(std::declval<S>().c_str());
++    static constexpr bool convertibleToWchar = std::is_convertible_v<CStrType, const wchar_t*>;
++    static constexpr bool convertibleToChar  = std::is_convertible_v<CStrType, const char*>;
+ 
+ public:
+-    using Type = decltype(conversionType(std::declval<S>().c_str()));
++    using Type = std::conditional_t<convertibleToWchar, wchar_t,
++          /**/   std::conditional_t<convertibleToChar,  char, void>>;
+     //using Type = typename S::value_type;
+     /*DON'T use S::value_type:
+         1. support Glib::ustring: value_type is "unsigned int" but c_str() returns "const char*"
+--- a/libssh2/libssh2_wrap.h
++++ b/libssh2/libssh2_wrap.h
+@@ -195,7 +195,9 @@
+             ZEN_CASE_RETURN_STRING(LIBSSH2_ERROR_MAC_FAILURE);
+             ZEN_CASE_RETURN_STRING(LIBSSH2_ERROR_HASH_INIT);
+             ZEN_CASE_RETURN_STRING(LIBSSH2_ERROR_HASH_CALC);
++#ifdef LIBSSH2_ERROR_STORE_OVERFLOW
+             ZEN_CASE_RETURN_STRING(LIBSSH2_ERROR_STORE_OVERFLOW);
++#endif
+ 
+         default:
+             return replaceCpy<std::wstring>(L"SSH status %x", L"%x", numberTo<std::wstring>(sc));
+--- a/FreeFileSync/Source/base/versioning.cpp
++++ b/FreeFileSync/Source/base/versioning.cpp
+@@ -557,7 +557,7 @@
      const std::wstring txtRemoving = _("Removing old file versions:") + L' ';
      const std::wstring txtDeletingFolder = _("Deleting folder %x");
  
@@ -67,7 +103,7 @@
      {
          const std::wstring errMsg = tryReportingError([&] //throw ThreadStopRequest
          {
-@@ -573,7 +573,7 @@
+@@ -571,7 +571,7 @@
                  bool deleteParent = false;
                  protFolderItemCount.access([&](auto& folderItemCount2) { deleteParent = --folderItemCount2[*parentPath] == 0; });
                  if (deleteParent) //we're done here anyway => no need to schedule parent deletion in a separate task!
@@ -76,7 +112,7 @@
              }
      };
  
-@@ -583,7 +583,7 @@
+@@ -581,7 +581,7 @@
          if (itemCount == 0)
              parallelWorkload.emplace_back(folderPath, [&deleteEmptyFolderTask](ParallelContext& ctx)
          {
@@ -85,7 +121,7 @@
          });
  
      for (const auto& [itemPath, isSymlink] : itemsToDelete)
-@@ -604,7 +604,7 @@
+@@ -602,7 +602,7 @@
                  bool deleteParent = false;
                  protFolderItemCount.access([&](auto& folderItemCount2) { deleteParent = --folderItemCount2[*parentPath] == 0; });
                  if (deleteParent)

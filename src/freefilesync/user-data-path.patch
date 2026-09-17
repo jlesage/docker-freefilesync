@@ -1,9 +1,9 @@
 #
 # Always use XDG_CONFIG_HOME, even for root.
 #
---- a/zen/sys_info.cpp	2025-11-24 22:53:48.412376766 -0500
-+++ b/zen/sys_info.cpp	2025-11-24 22:54:01.763664686 -0500
-@@ -255,7 +255,9 @@
+--- a/zen/sys_info.cpp
++++ b/zen/sys_info.cpp
+@@ -257,7 +257,9 @@
  
  Zstring zen::getUserDataPath() //throw FileError
  {

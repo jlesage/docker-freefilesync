@@ -1,5 +1,5 @@
 #
-# Implement changes documented in FreeFileSync_14.2/Bugs.txt.
+# Implement changes documented in FreeFileSync_14.12/Bugs.txt.
 #
 diff --git a/include/wx/features.h b/include/wx/features.h
 index 344d1a33f8..7fcfc3db5a 100644
@@ -225,6 +225,17 @@ index 81f9dec05c..14cffccd59 100644
 -    }
 +    Hide();
 +    wxWakeUpIdle();
+ 
+     return true;
+ }
+diff --git a/src/common/stattextcmn.cpp b/src/common/stattextcmn.cpp
+--- a/src/common/stattextcmn.cpp
++++ b/src/common/stattextcmn.cpp
+@@ -365,6 +365,7 @@ bool wxStaticTextBase::UpdateLabelOrig(const wxString& label)
+     // We need to clear the existing unwrapped label as it doesn't correspond
+     // to the new value of the actual label any longer.
+     m_unwrappedLabel.clear();
++    m_currentWrap = 0;
  
      return true;
  }

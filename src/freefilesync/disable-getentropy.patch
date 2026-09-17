@@ -1,9 +1,9 @@
 Support for the `getentropy()` function has been added to Linux Kernel 3.17.
 Some devices (e.g. Synology running the latest DSM) still have older kernel.
 See https://github.com/jlesage/docker-freefilesync/issues/8
---- a/zen/guid.h.orig	2023-08-26 20:15:21.278084681 -0400
-+++ b/zen/guid.h	2023-08-26 20:16:46.770265821 -0400
-@@ -24,7 +24,7 @@
+--- a/zen/guid.h
++++ b/zen/guid.h
+@@ -21,7 +21,7 @@
  #error Where is Glibc?
  #endif
  

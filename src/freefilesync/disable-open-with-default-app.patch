@@ -1,6 +1,6 @@
---- a/FreeFileSync/Source/config.h	2023-05-11 14:28:49.206715184 -0400
-+++ b/FreeFileSync/Source/config.h	2023-05-11 14:29:05.169469144 -0400
-@@ -242,7 +241,7 @@
+--- a/FreeFileSync/Source/config.h
++++ b/FreeFileSync/Source/config.h
+@@ -243,7 +243,7 @@
      std::vector<Zstring> commandHistory;
      size_t commandHistoryMax = 10;
  

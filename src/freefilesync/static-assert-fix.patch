@@ -1,6 +1,6 @@
---- a/zen/utf.h	2026-03-05 07:40:34.355950163 -0500
-+++ b/zen/utf.h	2026-03-05 07:42:02.390736692 -0500
-@@ -274,6 +274,9 @@
+--- a/zen/utf.h
++++ b/zen/utf.h
+@@ -271,6 +271,9 @@
  template <class CharType>
  using UtfDecoder = impl::UtfDecoderImpl<CharType, sizeof(CharType)>;
  
@@ -10,7 +10,7 @@
  
  template <class CharType, class Function> inline
  void codePointToUtf(impl::CodePoint cp, Function writeOutput) //"writeOutput" is a unary function taking a CharType
-@@ -285,7 +288,7 @@
+@@ -282,7 +285,7 @@
      else if constexpr (sizeof(CharType) == 4) //Linux/macOS: UTF32-wchar_t
          writeOutput(cp);
      else
@@ -19,9 +19,9 @@
  }
  
  //-------------------------------------------------------------------------------------------
---- a/zen/basic_math.h	2026-03-05 07:50:38.097748473 -0500
-+++ b/zen/basic_math.h	2026-03-05 07:52:21.603741138 -0500
-@@ -236,6 +236,9 @@
+--- a/zen/basic_math.h
++++ b/zen/basic_math.h
+@@ -233,6 +233,9 @@
  }
  
  
@@ -31,7 +31,7 @@
  template <size_t N, class T> inline
  constexpr T power(T value)
  {
-@@ -244,7 +247,7 @@
+@@ -241,7 +244,7 @@
      else if constexpr (N == 3)
          return value * value * value;
      else //need more!?
