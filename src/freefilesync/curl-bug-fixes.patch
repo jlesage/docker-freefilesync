@@ -1,9 +1,9 @@
 #
-# Implement changes documented in FreeFileSync_14.0/Bugs.txt.
+# Implement changes documented in FreeFileSync_14.12/Bugs.txt.
 #
---- a/lib/ftp.c	2025-01-21 22:40:57.732578817 -0500
-+++ b/lib/ftp.c	2025-01-22 16:53:57.840383118 -0500
-@@ -1774,6 +1774,17 @@
+--- a/lib/ftp.c
++++ b/lib/ftp.c
+@@ -2049,6 +2049,17 @@
    return TRUE;
  }
  
@@ -19,9 +19,9 @@
 +}
 +
  static CURLcode ftp_state_pasv_resp(struct Curl_easy *data,
+                                     struct ftp_conn *ftpc,
                                      int ftpcode)
- {
-@@ -1851,7 +1862,16 @@
+@@ -2115,7 +2126,19 @@
      }
  
      /* we got OK from server */
@@ -30,21 +30,33 @@
 +    if(!skipIp && !is_routable_ip_v4(ip))
 +    {
 +        unsigned int ip_ctrl[4];
-+        if(4 != sscanf(control_address(conn), "%u.%u.%u.%u",
++        char *ctrl_addr = NULL;
++        if(ftp_control_addr_dup(data, &ctrl_addr) ||
++           4 != sscanf(ctrl_addr, "%u.%u.%u.%u",
 +           &ip_ctrl[0], &ip_ctrl[1], &ip_ctrl[2], &ip_ctrl[3]) ||
 +           is_routable_ip_v4(ip_ctrl))
 +            skipIp = true;
++        curlx_free(ctrl_addr);
 +    }
-+    if (skipIp) {
++    if(skipIp) {
        /* told to ignore the remotely given IP but instead use the host we used
           for the control connection */
        infof(data, "Skip %u.%u.%u.%u for data connection, reuse %s instead",
-@@ -3645,7 +3665,7 @@
+@@ -2341,7 +2364,7 @@
  
-         /* But only if a body transfer was requested. */
+         /* Only if a body transfer was requested. */
          if(ftp->transfer == PPTRANSFER_BODY) {
 -          result = ftp_nb_type(data, ftpc, ftp, TRUE, FTP_LIST_TYPE);
-+          result = ftp_nb_type(data, ftpc, ftp, data->set.prefer_ascii, FTP_LIST_TYPE);
++          result = ftp_nb_type(data, ftpc, ftp, (bool)data->set.prefer_ascii, FTP_LIST_TYPE);
            if(result)
              return result;
          }
+@@ -2349,7 +2372,7 @@
+       }
+       else {
+         if(data->set.prequote && !ftpc->file) {
+-          result = ftp_nb_type(data, ftpc, ftp, TRUE,
++          result = ftp_nb_type(data, ftpc, ftp, (bool)data->state.prefer_ascii,
+                                FTP_RETR_LIST_TYPE);
+         }
+         else {
