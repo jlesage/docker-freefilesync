@@ -1,5 +1,5 @@
 #
-# Implement changes documented in FreeFileSync_14.12/Bugs.txt.
+# Implement changes documented in FreeFileSync 14.13 Bugs.txt.
 #
 --- a/lib/ftp.c
 +++ b/lib/ftp.c

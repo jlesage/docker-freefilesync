@@ -1,52 +1,55 @@
 --- a/FreeFileSync/Source/ui/gui_generated.cpp
 +++ b/FreeFileSync/Source/ui/gui_generated.cpp
+
 @@ -110,10 +110,12 @@
  
-     m_menuHelp->AppendSeparator();
+ 	m_menuHelp->AppendSeparator();
  
 +#if 0
-     m_menuItemCheckVersionNow = new wxMenuItem( m_menuHelp, wxID_ANY, wxString( _("&Check for updates now") ), wxEmptyString, wxITEM_NORMAL );
-     m_menuHelp->Append( m_menuItemCheckVersionNow );
+ 	m_menuItemCheckVersionNow = new wxMenuItem( m_menuHelp, wxID_ANY, wxString( _("&Check for updates now") ) , wxEmptyString, wxITEM_NORMAL );
+ 	m_menuHelp->Append( m_menuItemCheckVersionNow );
  
-     m_menuHelp->AppendSeparator();
+ 	m_menuHelp->AppendSeparator();
 +#endif
  
-     m_menuItemAbout = new wxMenuItem( m_menuHelp, wxID_ABOUT, wxString( _("&About") ) + wxT('\t') + wxT("Shift+F1"), wxEmptyString, wxITEM_NORMAL );
-     m_menuHelp->Append( m_menuItemAbout );
+ 	m_menuItemAbout = new wxMenuItem( m_menuHelp, wxID_ABOUT, wxString( _("&About") ) + wxT('\t') + wxT("Shift+F1"), wxEmptyString, wxITEM_NORMAL );
+ 	m_menuHelp->Append( m_menuItemAbout );
 @@ -1115,7 +1117,9 @@
-     m_menuTools->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainDialogGenerated::onMenuExportFileList ), this, m_menuItemExportList->GetId());
-     m_menuTools->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainDialogGenerated::onMenuResetLayout ), this, m_menuItemResetLayout->GetId());
-     m_menuHelp->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainDialogGenerated::onShowHelp ), this, m_menuItemHelp->GetId());
+ 	m_menuTools->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainDialogGenerated::onMenuExportFileList ), this, m_menuItemExportList->GetId());
+ 	m_menuTools->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainDialogGenerated::onMenuResetLayout ), this, m_menuItemResetLayout->GetId());
+ 	m_menuHelp->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainDialogGenerated::onShowHelp ), this, m_menuItemHelp->GetId());
 +#if 0
-     m_menuHelp->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainDialogGenerated::onMenuCheckVersion ), this, m_menuItemCheckVersionNow->GetId());
+ 	m_menuHelp->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainDialogGenerated::onMenuCheckVersion ), this, m_menuItemCheckVersionNow->GetId());
 +#endif
-     m_menuHelp->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainDialogGenerated::onMenuAbout ), this, m_menuItemAbout->GetId());
-     m_buttonCompare->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MainDialogGenerated::onCompare ), NULL, this );
-     m_bpButtonCmpConfig->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MainDialogGenerated::onCmpSettings ), NULL, this );
+ 	m_menuHelp->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainDialogGenerated::onMenuAbout ), this, m_menuItemAbout->GetId());
+ 	m_buttonCompare->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MainDialogGenerated::onCompare ), NULL, this );
+ 	m_bpButtonCmpConfig->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MainDialogGenerated::onCmpSettings ), NULL, this );
 --- a/FreeFileSync/Source/ui/gui_generated.h
 +++ b/FreeFileSync/Source/ui/gui_generated.h
+
 @@ -96,7 +96,9 @@
-     wxMenuItem* m_menuItemShowOverview;
-     wxMenu* m_menuHelp;
-     wxMenuItem* m_menuItemHelp;
+ 		wxMenuItem* m_menuItemShowOverview;
+ 		wxMenu* m_menuHelp;
+ 		wxMenuItem* m_menuItemHelp;
 +#if 0
-     wxMenuItem* m_menuItemCheckVersionNow;
+ 		wxMenuItem* m_menuItemCheckVersionNow;
 +#endif
-     wxMenuItem* m_menuItemAbout;
-     wxBoxSizer* bSizerPanelHolder;
-     wxPanel* m_panelTopButtons;
+ 		wxMenuItem* m_menuItemAbout;
+ 		wxBoxSizer* bSizerPanelHolder;
+ 		wxPanel* m_panelTopButtons;
 @@ -234,7 +236,9 @@
-     virtual void onMenuExportFileList( wxCommandEvent& event ) { event.Skip(); }
-     virtual void onMenuResetLayout( wxCommandEvent& event ) { event.Skip(); }
-     virtual void onShowHelp( wxCommandEvent& event ) { event.Skip(); }
+ 		virtual void onMenuExportFileList( wxCommandEvent& event ) { event.Skip(); }
+ 		virtual void onMenuResetLayout( wxCommandEvent& event ) { event.Skip(); }
+ 		virtual void onShowHelp( wxCommandEvent& event ) { event.Skip(); }
 +#if 0
-     virtual void onMenuCheckVersion( wxCommandEvent& event ) { event.Skip(); }
+ 		virtual void onMenuCheckVersion( wxCommandEvent& event ) { event.Skip(); }
 +#endif
-     virtual void onMenuAbout( wxCommandEvent& event ) { event.Skip(); }
-     virtual void onCompSettingsContextMouse( wxMouseEvent& event ) { event.Skip(); }
-     virtual void onCompSettingsContext( wxCommandEvent& event ) { event.Skip(); }
+ 		virtual void onMenuAbout( wxCommandEvent& event ) { event.Skip(); }
+ 		virtual void onCompSettingsContextMouse( wxMouseEvent& event ) { event.Skip(); }
+ 		virtual void onCompSettingsContext( wxCommandEvent& event ) { event.Skip(); }
 --- a/FreeFileSync/Source/ui/main_dlg.cpp
 +++ b/FreeFileSync/Source/ui/main_dlg.cpp
+
 @@ -31,7 +31,9 @@
  #include "cfg_grid.h"
  #include "folder_selector.h"
@@ -57,7 +60,7 @@
  #include "gui_status_handler.h"
  #include "small_dlgs.h"
  #include "rename_dlg.h"
-@@ -984,7 +986,9 @@
+@@ -987,7 +989,9 @@
  
      setImage(*m_menuItemHelp,            loadImage("help",         dipToScreen(getMenuIconDipSize())));
      setImage(*m_menuItemAbout,           loadImage("about",        dipToScreen(getMenuIconDipSize())));
@@ -67,7 +70,7 @@
  
      fixMenuIcons(*m_menuFile);
      fixMenuIcons(*m_menuActions);
-@@ -1085,8 +1089,10 @@
+@@ -1088,8 +1092,10 @@
      //mainly to update row label sizes...
      updateGui();
  
@@ -78,7 +81,7 @@
  
      //asynchronous call to wxWindow::Layout(): fix superfluous frame on right and bottom when FFS is started in fullscreen mode
      Bind(wxEVT_IDLE, &MainDialog::onLayoutWindowAsync, this);
-@@ -6379,6 +6385,7 @@
+@@ -6396,6 +6402,7 @@
  }
  
  
@@ -86,7 +89,7 @@
  void MainDialog::onMenuCheckVersion(wxCommandEvent& event)
  {
      checkForUpdateNow(*this, globalCfg_.lastOnlineVersion);
-@@ -6427,6 +6434,7 @@
+@@ -6444,6 +6451,7 @@
      else
          showNewVersionReminder();
  }
@@ -96,6 +99,7 @@
  void MainDialog::onLayoutWindowAsync(wxIdleEvent& event)
 --- a/FreeFileSync/Source/ui/main_dlg.h
 +++ b/FreeFileSync/Source/ui/main_dlg.h
+
 @@ -189,7 +189,9 @@
      void removeSelectedCfgHistoryItems(bool removeFromDisk);
      void renameSelectedCfgHistoryItem();

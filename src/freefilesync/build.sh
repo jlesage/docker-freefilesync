@@ -63,6 +63,7 @@ fi
 # Install required packages.
 #
 apk --no-cache add \
+    bash \
     curl \
     git \
     patch \
@@ -269,17 +270,24 @@ for PATCH in $PATCHES; do
     patch -p1 -d /tmp/freefilesync < "$SCRIPT_DIR"/"$PATCH"
 done
 
-sed -i "s/GDRIVE_CLIENT_ID_K1\[\] = {}/GDRIVE_CLIENT_ID_K1\[\] = {${GOOGLE_CLIENT_ID_K1}}/" /tmp/freefilesync/FreeFileSync/Source/afs/gdrive.cpp
-sed -i "s/GDRIVE_CLIENT_ID_K2\[\] = {}/GDRIVE_CLIENT_ID_K2\[\] = {${GOOGLE_CLIENT_ID_K2}}/" /tmp/freefilesync/FreeFileSync/Source/afs/gdrive.cpp
-sed -i "s/GDRIVE_CLIENT_SECRET_K1\[\] = {}/GDRIVE_CLIENT_SECRET_K1\[\] = {${GOOGLE_CLIENT_SECRET_K1}}/" /tmp/freefilesync/FreeFileSync/Source/afs/gdrive.cpp
-sed -i "s/GDRIVE_CLIENT_SECRET_K2\[\] = {}/GDRIVE_CLIENT_SECRET_K2\[\] = {${GOOGLE_CLIENT_SECRET_K2}}/" /tmp/freefilesync/FreeFileSync/Source/afs/gdrive.cpp
+if [ -n "$GOOGLE_CLIENT_ID_K1" ]; then
+    sed -i "s/GDRIVE_CLIENT_ID_K1\[\] = {0}/GDRIVE_CLIENT_ID_K1[] = {${GOOGLE_CLIENT_ID_K1}}/" /tmp/freefilesync/FreeFileSync/Source/afs/gdrive.cpp
+fi
+if [ -n "$GOOGLE_CLIENT_ID_K2" ]; then
+    sed -i "s/GDRIVE_CLIENT_ID_K2\[\] = {0}/GDRIVE_CLIENT_ID_K2[] = {${GOOGLE_CLIENT_ID_K2}}/" /tmp/freefilesync/FreeFileSync/Source/afs/gdrive.cpp
+fi
+if [ -n "$GOOGLE_CLIENT_SECRET_K1" ]; then
+    sed -i "s/GDRIVE_CLIENT_SECRET_K1\[\] = {0}/GDRIVE_CLIENT_SECRET_K1[] = {${GOOGLE_CLIENT_SECRET_K1}}/" /tmp/freefilesync/FreeFileSync/Source/afs/gdrive.cpp
+fi
+if [ -n "$GOOGLE_CLIENT_SECRET_K2" ]; then
+    sed -i "s/GDRIVE_CLIENT_SECRET_K2\[\] = {0}/GDRIVE_CLIENT_SECRET_K2[] = {${GOOGLE_CLIENT_SECRET_K2}}/" /tmp/freefilesync/FreeFileSync/Source/afs/gdrive.cpp
+fi
 
 # Fix sysroot for includes.
-sed -i "s|CXXFLAGS  += -isystem/usr/include/|CXXFLAGS  += -isystem$(xx-info sysroot)usr/include/|" /tmp/freefilesync/FreeFileSync/Source/Makefile
-
-# Use GTK 3.
-sed -i "s/gtk+-2.0/gtk+-3.0/" /tmp/freefilesync/FreeFileSync/Source/Makefile
-sed -i "s/gtk-2.0/gtk-3.0/" /tmp/freefilesync/FreeFileSync/Source/Makefile
+sed -i \
+    -e "s|CXXFLAGS += -isystem/usr/include/|CXXFLAGS += -isystem$(xx-info sysroot)usr/include/|" \
+    /tmp/freefilesync/FreeFileSync/Source/Makefile \
+    /tmp/freefilesync/FreeFileSync/Source/RealTimeSync/Makefile
 
 log "Compiling FreeFileSync..."
 

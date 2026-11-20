@@ -8,8 +8,8 @@
 ARG DOCKER_IMAGE_VERSION=
 
 # Define software versions.
-ARG FREEFILESYNC_VERSION=14.12
-ARG WXWIDGETS_VERSION=3.3.3
+ARG FREEFILESYNC_VERSION=14.13
+ARG WXWIDGETS_VERSION=3.3.4
 ARG LIBSSH2_VERSION=1.11.1
 ARG CURL_VERSION=8.21.0
 
@@ -30,7 +30,7 @@ ARG GOOGLE_CLIENT_SECRET_K2=
 FROM --platform=$BUILDPLATFORM tonistiigi/xx AS xx
 
 # Build FreeFileSync.
-FROM --platform=$BUILDPLATFORM alpine:3.20 AS freefilesync
+FROM --platform=$BUILDPLATFORM alpine:3.21 AS freefilesync
 ARG TARGETPLATFORM
 ARG FREEFILESYNC_URL
 ARG WXWIDGETS_URL
@@ -55,7 +55,7 @@ RUN xx-verify /tmp/freefilesync/FreeFileSync/Build/Bin/FreeFileSync
 
 # Pull base image.
 
-FROM jlesage/baseimage-gui:alpine-3.20-v4.14.0
+FROM jlesage/baseimage-gui:alpine-3.21-v4.14.0
 
 ARG FREEFILESYNC_VERSION
 ARG DOCKER_IMAGE_VERSION
